@@ -308,7 +308,7 @@ function receivedMessage(event) {
         break;
 
       default:
-        const numberOfMeow = Math.floor(3 * Math.random());
+        const numberOfMeow = Math.floor(2 * Math.random() + 1);
         let message = '';
         for (let i = 0; i < numberOfMeow; i++) {
           message += 'Meow' + ' ';
