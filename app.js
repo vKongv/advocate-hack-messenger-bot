@@ -308,7 +308,12 @@ function receivedMessage(event) {
         break;
 
       default:
-        sendTextMessage(senderID, messageText);
+        const numberOfMeow = Math.floor(3 * Math.random());
+        let message = '';
+        for (let i = 0; i < numberOfMeow; i++) {
+          message += 'Meow' + ' ';
+        }
+        sendTextMessage(senderID, message);
     }
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
