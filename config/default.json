@@ -1,6 +1,6 @@
 {
-    "appSecret": "",
-    "pageAccessToken": "",
-    "validationToken": "",
-    "serverURL": ""
+    "appSecret": "fa5dfa9e278a1563472930cc32bd5eeb",
+    "pageAccessToken": "EAAEFQC4IuiIBAKr519u7YZAo3D7b0A0ZAH4urKxhQ7hX2sUDd5s41wSRR74a2mwnHfZCzdMoJWccZAaYcos2Ak9oZAqPAJZAAjcZA4149cdG1BCBWZCqCPfZCTdocZCtJkkx8pqOjUwvF2Nhxg0NAWADYJLxPzzUZBZA8BaL91OZBlBZAJPQZDZD",
+    "validationToken": "New_Testing_Chatbot",
+    "serverURL": "localhost:5000"
 }
