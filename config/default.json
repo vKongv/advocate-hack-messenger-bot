@@ -1,6 +1,6 @@
 {
-    "appSecret": "fa5dfa9e278a1563472930cc32bd5eeb",
-    "pageAccessToken": "EAAEFQC4IuiIBAKr519u7YZAo3D7b0A0ZAH4urKxhQ7hX2sUDd5s41wSRR74a2mwnHfZCzdMoJWccZAaYcos2Ak9oZAqPAJZAAjcZA4149cdG1BCBWZCqCPfZCTdocZCtJkkx8pqOjUwvF2Nhxg0NAWADYJLxPzzUZBZA8BaL91OZBlBZAJPQZDZD",
+    "appSecret": "4dca07a25e2ced404eca1031650d0998",
+    "pageAccessToken": "EAAYml4hk8M0BAKOwMJOoYT4OpMpX4IducWUfKrOBZBeDKHLH4Y0aByQRgZAgFfJspfrdgMEAJKxgYab6Y8y0FqYg9ZB0HpGiOup60oTyFE0VWxxfsDyZBjPqniteerwGBISPRSs9airW2XoPS3ZAfZBuBPWxFrYBCMUKvHejXbOQZDZD",
     "validationToken": "advocate-hack-messenger-bot",
     "serverURL": "localhost:5000"
 }
