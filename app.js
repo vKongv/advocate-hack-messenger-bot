@@ -818,13 +818,13 @@ function sendAccountLinking(recipientId) {
  */
 function forwardMessage(recipientId, message) {
   recipientId = 1779902678693258;
-  var message = event.message;
+  // var message = event.message;
   
   var messageData = {
     recipient: {
       id: recipientId
     },
-    message,
+    message
   };
 
   callSendAPI(messageData);
