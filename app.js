@@ -618,7 +618,7 @@ function sendGenericMessage(recipientId) {
             title: "rift",
             subtitle: "Next-generation virtual reality",
             item_url: "https://www.oculus.com/en-us/rift/",               
-            image_url: SERVER_URL + "/assets/rift.png",
+            image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQBta-66htflwi-K&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12602069_1350608345000055_9152154959326740480_n.jpg%3Foh%3D94a78537864e25e5b0c0067dfe89bc4a%26oe%3D59B5B9E8&_nc_hash=AQDXEZQ5Q2GI33IR",
             buttons: [{
               type: "web_url",
               url: "https://www.oculus.com/en-us/rift/",
@@ -632,7 +632,7 @@ function sendGenericMessage(recipientId) {
             title: "touch",
             subtitle: "Your Hands, Now in VR",
             item_url: "https://www.oculus.com/en-us/touch/",               
-            image_url: SERVER_URL + "/assets/touch.png",
+            image_url: "https://scontent.oculuscdn.com/t64.5771-25/12139289_377088419322281_3571472392767143936_n.png/hand-controller.png",
             buttons: [{
               type: "web_url",
               url: "https://www.oculus.com/en-us/touch/",
