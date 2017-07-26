@@ -840,55 +840,50 @@ function forwardMessage(recipientId, message) {
   ];
 
   if ( isReportActivated ) {
-      console.log(recipientId, message);
-      console.log(message !== undefined);
-      console.log(message.mid !== undefined);
-      console.log(message.text !== undefined);
-      console.log(message.attachments !== undefined);
-    
-    if ( message.mid !== undefined ) {
+    console.log(recipientId, message);
+    console.log(message !== undefined);
+    console.log(message.mid !== undefined);
+    console.log(message.text !== undefined);
+    console.log(message.attachments !== undefined);
+
+    if ( message.mid !== undefined && message.text !== "end report") {
       console.log(msgReplied.length);
-      
       var min = Math.ceil(0);
       console.log(min);
-      
       var max = Math.floor(msgReplied.length);
       console.log(max);
-      
       const msgIndex = Math.floor(Math.random() * (max - min + 1)) + min;
-
       console.log(msgIndex);
       console.log(msgReplied[msgIndex]);
-      
       sendTextMessage(recipientId, msgReplied[msgIndex]);
-    }
 
-    if ( message.text !== undefined ) {
-      constructedMessage = {
-        text: 'Report:' + recipientId + '/n' + message.text,
+      if ( message.text !== undefined ) {
+        constructedMessage = {
+          text: 'Report:' + recipientId + '\n' + message.text,
+        }
+      } else if ( message.attachments !== undefined ) {
+        constructedMessage = {
+          text: 'Report:' + recipientId + '\n' + message.attachments[0].url,
+        }
       }
-    } else if ( message.attachments !== undefined ) {
-      constructedMessage = {
-        text: 'Report:' + recipientId + '/n' + message.attachments[0].url,
+
+      var reportMessageData = {
+        recipient: {
+          id: moderatorId
+        },
+        message: constructedMessage,
       }
+
+      console.log(constructedMessage);
+      console.log(reportMessageData);
+
+      callSendAPI(reportMessageData);
+
+    } else if (message.mid !== undefined && message.text == "end report") {
+      sendTextMessage(recipientId, "All information you reported had been noted down.");
+      const endMsg = "End of Report" + recipientId;
+      sendTextMessage(moderatorId, "All information you reported had been noted down.");    
     }
-
-    var reportMessageData = {
-      recipient: {
-        id: moderatorId
-      },
-      message: constructedMessage,
-    }
-
-    console.log(constructedMessage);
-    console.log(reportMessageData);
-
-    callSendAPI(reportMessageData);
-
-  } else {
-    sendTextMessage(recipientId, "All information you reported had been noted down.");
-    const endMsg = "End of Report" + recipientId;
-    sendTextMessage(moderatorId, "All information you reported had been noted down.");    
   }
 }
 
