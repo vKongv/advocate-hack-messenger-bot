@@ -824,13 +824,13 @@ function forwardMessage(recipientId, message) {
     constructedMessage = {
       text: messageText,
     }
-    
+
   } else if (message.attachments) {
     constructedMessage = {
       attachment: {
         type: "image",
         payload: {
-          url: message.attachments[0].url + "/assets/rift.png"
+          url: message.attachments[0].url,
         }
       }
     }
@@ -842,6 +842,9 @@ function forwardMessage(recipientId, message) {
     },
     message: constructedMessage,
   };
+
+  console.log('in forward message');
+  console.log(messageData);
 
   callSendAPI(messageData);
 }
