@@ -312,7 +312,6 @@ function receivedMessage(event) {
       case 'report':
         // isReportActivated = true;
         console.log(event.message);
-        console.log(message);
         forwardMessage(senderID, event.message);
         break;
 
