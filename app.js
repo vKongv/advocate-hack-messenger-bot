@@ -822,7 +822,7 @@ function forwardMessage(recipientId, message) {
 
   if (message.text) {
     constructedMessage = {
-      text: messageText,
+      text: message.text,
     }
 
   } else if (message.attachments) {
