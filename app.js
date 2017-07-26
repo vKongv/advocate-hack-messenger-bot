@@ -18,6 +18,8 @@ const
   https = require('https'),  
   request = require('request');
 
+  const isReportActivated = false;
+
 var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
@@ -307,9 +309,13 @@ function receivedMessage(event) {
         sendAccountLinking(senderID);
         break;
 
-      case 'forward':
-        forwardMessage(1779902678693258);
+      case 'report':
+        isReportActivated = true;
+        forwardMessage(senderID, message);
         break;
+
+      case 'end report':
+        isReportActivated = false
 
       default:
         const numberOfMeow = Math.floor(2 * Math.random()) + 1;
@@ -810,7 +816,8 @@ function sendAccountLinking(recipientId) {
  * Forward a message with Send API.
  *
  */
-function forwardMessage(recipientId) {
+function forwardMessage(recipientId, message) {
+  recipientId = 1779902678693258;
   var message = event.message;
   
   var messageData = {
