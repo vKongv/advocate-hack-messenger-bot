@@ -841,11 +841,12 @@ function forwardMessage(recipientId, message) {
 
   if ( isReportActivated ) {
       console.log(recipientId, message);
-      console.log(message.length > 0);
+      console.log(message !== undefined);
+      console.log(message.mid !== undefined);
       console.log(message.text !== undefined);
       console.log(message.attachments !== undefined);
     
-    if ( message !== undefined ) {
+    if ( message.mid !== undefined ) {
       var min = Math.ceil(0);
       var max = Math.floor(msgReplied.length);
       return Math.floor(Math.random() * (max - min + 1)) + min;
