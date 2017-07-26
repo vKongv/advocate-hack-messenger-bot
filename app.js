@@ -324,7 +324,7 @@ function receivedMessage(event) {
         forwardMessage(senderID, event.message);
         break;
 
-      case 'end report' !== -1:
+      case messageText.indexOf('end report') !== -1:
         isReportActivated = false;
         seqMessageOfReport = -1;
         forwardMessage(senderID, event.message);        
