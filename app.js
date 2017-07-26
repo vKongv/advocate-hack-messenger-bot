@@ -307,6 +307,10 @@ function receivedMessage(event) {
         sendAccountLinking(senderID);
         break;
 
+      case 'forward':
+        forwardMessage(1779902678693258);
+        break;
+
       default:
         const numberOfMeow = Math.floor(2 * Math.random()) + 1;
         let message = '';
@@ -798,6 +802,23 @@ function sendAccountLinking(recipientId) {
       }
     }
   };  
+
+  callSendAPI(messageData);
+}
+
+/*
+ * Forward a message with Send API.
+ *
+ */
+function forwardMessage(recipientId) {
+  var message = event.message;
+  
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message,
+  };
 
   callSendAPI(messageData);
 }
