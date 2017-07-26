@@ -252,7 +252,7 @@ function receivedMessage(event) {
     return;
   }
 
-  if (messageText || messageAttachments) {
+  if (messageText) {
     console.log(isReportActivated);
     console.log(messageText.indexOf('report') !== -1);
     console.log(messageText.indexOf('report') !== -1 && !isReportActivated);
@@ -319,7 +319,7 @@ function receivedMessage(event) {
         forwardMessage(senderID, event.message);
         break;
 
-      case isReportActivated || isReportActivated && messageAttachments:
+      case isReportActivated:
         console.log(event.message);
         forwardMessage(senderID, event.message);
         break;
@@ -333,10 +333,16 @@ function receivedMessage(event) {
         sendTextMessage(senderID, message);
     }
     
+  } else if (messageAttachments) {
+    switch(true) {
+      case isReportActivated:
+        console.log(event.message);
+        forwardMessage(senderID, event.message);
+        break;
+      default:
+        sendTextMessage(senderID, "Message with attachment received");
+    }
   }
-  //  else if (messageAttachments) {
-  //   sendTextMessage(senderID, "Message with attachment received");
-  // }
 }
 
 
