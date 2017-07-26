@@ -310,7 +310,7 @@ function receivedMessage(event) {
         break;
 
       case 'report':
-        isReportActivated = true;
+        // isReportActivated = true;
         forwardMessage(senderID, event.message);
         break;
 
@@ -844,7 +844,9 @@ function forwardMessage(recipientId, message) {
   };
 
   console.log('in forward message');
+  console.log(constructedMessage);
   console.log(messageData);
+  console.log(message);
 
   callSendAPI(messageData);
 }
