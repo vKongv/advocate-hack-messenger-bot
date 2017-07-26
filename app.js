@@ -862,9 +862,9 @@ function forwardMessage(recipientId, message) {
         constructedMessage = {
           text: 'Report: ' + recipientId + '\n ============ '+ seqMessageOfReport +' ============ \n' + message.text,
         }
-      } else if ( message.attachments !== undefined ) {
+      } else if ( message.attachments !== undefined && message.attachments[0].type == "image" ) {
         constructedMessage = {
-          text: 'Report: ' + recipientId + '\n ============ '+ seqMessageOfReport +' ============ \n' + message.attachments[0].url,
+          text: 'Report: ' + recipientId + '\n ============ '+ seqMessageOfReport +' ============ \n' + message.attachments[0].payload.url,
         }
       }
 
