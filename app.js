@@ -839,8 +839,8 @@ function forwardMessage(recipientId, message) {
 
   if ( isReportActivated ) {
     if (message) {
-      min = Math.ceil(0);
-      max = Math.floor(msgReplied.length);
+      var min = Math.ceil(0);
+      var max = Math.floor(msgReplied.length);
       return Math.floor(Math.random() * (max - min + 1)) + min;
       const msgIndex = Math.floor(Math.random() * (max - min + 1)) + min;
       console.log(msgIndex);
