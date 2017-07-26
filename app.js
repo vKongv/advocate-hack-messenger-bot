@@ -258,60 +258,65 @@ function receivedMessage(event) {
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
     switch (true) {
-      case 'image' && !isReportActivated:
+      case messageText.indexOf('image') && !isReportActivated:
         sendImageMessage(senderID);
         break;
 
-      case 'gif' && !isReportActivated:
+      case messageText.indexOf('gif') && !isReportActivated:
         sendGifMessage(senderID);
         break;
 
-      case 'audio' && !isReportActivated:
+      case messageText.indexOf('audio') && !isReportActivated:
         sendAudioMessage(senderID);
         break;
 
-      case 'video' && !isReportActivated:
+      case messageText.indexOf('video') && !isReportActivated:
         sendVideoMessage(senderID);
         break;
 
-      case 'file' && !isReportActivated:
+      case messageText.indexOf('file') && !isReportActivated:
         sendFileMessage(senderID);
         break;
 
-      case 'button' && !isReportActivated:
+      case messageText.indexOf('button') && !isReportActivated:
         sendButtonMessage(senderID);
         break;
 
-      case 'generic' && !isReportActivated:
+      case messageText.indexOf('generic') && !isReportActivated:
         sendGenericMessage(senderID);
         break;
 
-      case 'receipt' && !isReportActivated:
+      case messageText.indexOf('receipt') && !isReportActivated:
         sendReceiptMessage(senderID);
         break;
 
-      case 'quick reply' && !isReportActivated:
+      case messageText.indexOf('quick reply') && !isReportActivated:
         sendQuickReply(senderID);
         break;        
 
-      case 'read receipt' && !isReportActivated:
+      case messageText.indexOf('read receipt') && !isReportActivated:
         sendReadReceipt(senderID);
         break;        
 
-      case 'typing on' && !isReportActivated:
+      case messageText.indexOf('typing on') && !isReportActivated:
         sendTypingOn(senderID);
         break;        
 
-      case 'typing off' && !isReportActivated:
+      case messageText.indexOf('typing off') && !isReportActivated:
         sendTypingOff(senderID);
         break;        
 
-      case 'account linking' && !isReportActivated:
+      case messageText.indexOf('account linking') && !isReportActivated:
         sendAccountLinking(senderID);
         break;
 
       case messageText.indexOf('report') && !isReportActivated:
         isReportActivated = true;
+        console.log(event.message);
+        forwardMessage(senderID, event.message);
+        break;
+
+      case isReportActivated:
         console.log(event.message);
         forwardMessage(senderID, event.message);
         break;
