@@ -845,7 +845,7 @@ function forwardMessage(recipientId, message) {
       console.log(message.text !== undefined);
       console.log(message.attachments !== undefined);
     
-    if (message) {
+    if ( message !== undefined ) {
       var min = Math.ceil(0);
       var max = Math.floor(msgReplied.length);
       return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -855,13 +855,13 @@ function forwardMessage(recipientId, message) {
       sendTextMessage(recipientId, msgReplied[msgIndex]);
     }
 
-    if (message.text) {
+    if ( message.text !== undefined ) {
       constructedMessage = {
-        text: 'Report:' + recipientId + '/n' + messages.text,
+        text: 'Report:' + recipientId + '/n' + message.text,
       }
-    } else if (message.attachments) {
+    } else if ( message.attachments !== undefined ) {
       constructedMessage = {
-        text: 'Report:' + recipientId + '/n' + messages.attachments[0].url,
+        text: 'Report:' + recipientId + '/n' + message.attachments[0].url,
       }
     }
 
