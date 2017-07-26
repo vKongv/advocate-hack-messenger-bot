@@ -19,6 +19,7 @@ const
   request = require('request');
 
 var isReportActivated = false;
+var seqMessageOfReport = 0;
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -323,8 +324,9 @@ function receivedMessage(event) {
         forwardMessage(senderID, event.message);
         break;
 
-      case 'end report' !== -1 && isReportActivated:
+      case 'end report' !== -1:
         isReportActivated = false;
+        seqMessageOfReport = -1;
         forwardMessage(senderID, event.message);        
 
       default:
@@ -847,23 +849,20 @@ function forwardMessage(recipientId, message) {
     console.log(message.attachments !== undefined);
 
     if ( message.mid !== undefined && message.text !== "end report") {
-      console.log(msgReplied.length);
       var min = Math.ceil(0);
-      console.log(min);
       var max = Math.floor(msgReplied.length);
-      console.log(max);
       const msgIndex = Math.floor(Math.random() * (max - min + 1)) + min;
-      console.log(msgIndex);
-      console.log(msgReplied[msgIndex]);
       sendTextMessage(recipientId, msgReplied[msgIndex]);
+     
+      seqMessageOfReport ++;
 
       if ( message.text !== undefined ) {
         constructedMessage = {
-          text: 'Report:' + recipientId + '\n' + message.text,
+          text: 'Report: ' + recipientId + '\n ============'+ seqMessageOfReport +'============ \n' + message.text,
         }
       } else if ( message.attachments !== undefined ) {
         constructedMessage = {
-          text: 'Report:' + recipientId + '\n' + message.attachments[0].url,
+          text: 'Report: ' + recipientId + '\n ============'+ seqMessageOfReport +'============ \n' + message.attachments[0].url,
         }
       }
 
@@ -881,8 +880,8 @@ function forwardMessage(recipientId, message) {
 
     } else if (message.mid !== undefined && message.text == "end report") {
       sendTextMessage(recipientId, "All information you reported had been noted down.");
-      const endMsg = "End of Report" + recipientId;
-      sendTextMessage(moderatorId, endMsg);    
+      const endMsg = "==========   End of Report " + recipientId + "   ==========";
+      sendTextMessage(moderatorId, endMsg);
     }
   }
 }
