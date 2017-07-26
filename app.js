@@ -826,7 +826,8 @@ function sendAccountLinking(recipientId) {
  *
  */
 function forwardMessage(recipientId, message) {
-  moderatorId = 1779902678693258;
+  const moderatorId = 1779902678693258;
+
   var constructedMessage;
   var msgReplied = [
     "",
