@@ -253,7 +253,7 @@ function receivedMessage(event) {
   }
 
   if (messageText) {
-    console.log(messageText.indexOf('report') && !isReportActivated);
+    console.log(messageText.indexOf('report') !== -1 && !isReportActivated);
 
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
