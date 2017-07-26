@@ -1007,8 +1007,11 @@ function sendList (recipientID) {
                       title: "View Page",
                       type: "postback",
                       payload: {
-                        type: "web_url",
-                        url: "https://www.facebook.com/imMeowMeowTheCat/", 
+                        template_type: "button",
+                        buttons:[{
+                          type: "web_url",
+                          url: "https://www.facebook.com/imMeowMeowTheCat/", 
+                        }], 
                       }                      
                   }
               ]  
