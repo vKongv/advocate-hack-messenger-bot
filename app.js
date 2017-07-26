@@ -899,7 +899,7 @@ function forwardMessage(recipientId, message) {
 function sendMultipleImages(recipientId) {
   var messageData = {
     recipient: {
-      id: recipientId
+      id: 1539856399445843
     },
     message: {
       attachment: {
