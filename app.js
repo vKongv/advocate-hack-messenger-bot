@@ -842,6 +842,8 @@ function forwardMessage(recipientId, message) {
       max = Math.floor(msgReplied.length);
       return Math.floor(Math.random() * (max - min + 1)) + min;
       const msgIndex = Math.floor(Math.random() * (max - min + 1)) + min;
+      console.log(msgIndex);
+      console.log(msgReplied[msgIndex]);
       sendTextMessage(recipientId, msgReplied[msgIndex]);
     }
 
@@ -872,8 +874,6 @@ function forwardMessage(recipientId, message) {
     const endMsg = "End of Report" + recipientId;
     sendTextMessage(moderatorId, "All information you reported had been noted down.");    
   }
-
-  
 }
 
 /*
