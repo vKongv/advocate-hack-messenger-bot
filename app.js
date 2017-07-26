@@ -289,6 +289,10 @@ function receivedMessage(event) {
         sendGenericMessage(senderID);
         break;
 
+      case messageText.indexOf('more picture') !== -1 && !isReportActivated: 
+        sendMultipleImages(senderID);
+        break;
+
       case messageText.indexOf('receipt') !== -1 && !isReportActivated:
         sendReceiptMessage(senderID);
         break;
@@ -890,6 +894,55 @@ function forwardMessage(recipientId, message) {
       seqMessageOfReport = 0;
     }
   }
+}
+
+function sendMultipleImages(recipientId) {
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message: {
+      attachment: {
+        type: "template",
+        payload: {
+          template_type: "generic",
+          elements: [{
+            // title: "rift",
+            // subtitle: "Next-generation virtual reality",
+            // item_url: "https://www.oculus.com/en-us/rift/",               
+            image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQBta-66htflwi-K&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12602069_1350608345000055_9152154959326740480_n.jpg%3Foh%3D94a78537864e25e5b0c0067dfe89bc4a%26oe%3D59B5B9E8&_nc_hash=AQDXEZQ5Q2GI33IR",
+            // buttons: [{
+            //   type: "web_url",
+            //   url: "https://www.oculus.com/en-us/rift/",
+            //   title: "Open Web URL"
+            // }, {
+            //   type: "postback",
+            //   title: "Call Postback",
+            //   payload: "Payload for first bubble",
+            // }],
+          }, {
+            // title: "touch",
+            // subtitle: "Your Hands, Now in VR",
+            // item_url: "https://www.oculus.com/en-us/touch/",               
+            image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQAdmID8qGcDGvMr&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12602128_118926911963432_2231322187007000576_n.jpg%3Foh%3D38530dcc484871d407b624653afa6f4b%26oe%3D599D9314&_nc_hash=AQD1N4yaX7CyCEqX",
+            // buttons: [{
+            //   type: "web_url",
+            //   url: "https://www.oculus.com/en-us/touch/",
+            //   title: "Open Web URL"
+            // }, {
+            //   type: "postback",
+            //   title: "Call Postback",
+            //   payload: "Payload for second bubble",
+            // }]
+          }, {
+            image_url: "https://scontent.xx.fbcdn.net/v/t34.0-0/p280x280/20370750_1737704382924432_1874631364_n.jpg?_nc_ad=z-m&oh=14a01e3d69fe582886af28d900cb6f6f&oe=597B0AD8",            
+          }]
+        }
+      }
+    }
+  };  
+
+  callSendAPI(messageData);
 }
 
 /*
