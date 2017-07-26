@@ -252,6 +252,8 @@ function receivedMessage(event) {
   }
 
   if (messageText) {
+    console.log(isReportActivated);
+    console.log(messageText.indexOf('report') !== -1);
     console.log(messageText.indexOf('report') !== -1 && !isReportActivated);
 
     // If we receive a text message, check to see if it matches any special
