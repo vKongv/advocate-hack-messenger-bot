@@ -822,12 +822,12 @@ function forwardMessage(recipientId, message) {
   console.log(message);
   // var message = event.message;
   
-  // var messageData = {
-  //   recipient: {
-  //     id: recipientId
-  //   },
-  //   message
-  // };
+  var messageData = {
+    recipient: {
+      id: recipientId
+    },
+    message
+  };
 
   callSendAPI(messageData);
 }
