@@ -19,6 +19,7 @@ const
   request = require('request');
 
 var isReportActivated = false;
+var messages = [];
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -256,67 +257,68 @@ function receivedMessage(event) {
     // If we receive a text message, check to see if it matches any special
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
-    switch (messageText) {
-      case 'image':
+    switch (true) {
+      case 'image' && !isReportActivated:
         sendImageMessage(senderID);
         break;
 
-      case 'gif':
+      case 'gif' && !isReportActivated:
         sendGifMessage(senderID);
         break;
 
-      case 'audio':
+      case 'audio' && !isReportActivated:
         sendAudioMessage(senderID);
         break;
 
-      case 'video':
+      case 'video' && !isReportActivated:
         sendVideoMessage(senderID);
         break;
 
-      case 'file':
+      case 'file' && !isReportActivated:
         sendFileMessage(senderID);
         break;
 
-      case 'button':
+      case 'button' && !isReportActivated:
         sendButtonMessage(senderID);
         break;
 
-      case 'generic':
+      case 'generic' && !isReportActivated:
         sendGenericMessage(senderID);
         break;
 
-      case 'receipt':
+      case 'receipt' && !isReportActivated:
         sendReceiptMessage(senderID);
         break;
 
-      case 'quick reply':
+      case 'quick reply' && !isReportActivated:
         sendQuickReply(senderID);
         break;        
 
-      case 'read receipt':
+      case 'read receipt' && !isReportActivated:
         sendReadReceipt(senderID);
         break;        
 
-      case 'typing on':
+      case 'typing on' && !isReportActivated:
         sendTypingOn(senderID);
         break;        
 
-      case 'typing off':
+      case 'typing off' && !isReportActivated:
         sendTypingOff(senderID);
         break;        
 
-      case 'account linking':
+      case 'account linking' && !isReportActivated:
         sendAccountLinking(senderID);
         break;
 
-      case 'report':
-        // isReportActivated = true;
+      case messageText.indexOf('report') && !isReportActivated:
+        isReportActivated = true;
         console.log(event.message);
         forwardMessage(senderID, event.message);
         break;
 
-      case 'end report':
-        isReportActivated = false
+      case 'end report' && isReportActivated:
+        isReportActivated = false;
+        forwardMessage(senderID, event.message);        
 
       default:
         const numberOfMeow = Math.floor(2 * Math.random()) + 1;
@@ -326,6 +328,7 @@ function receivedMessage(event) {
         }
         sendTextMessage(senderID, message);
     }
+    
   } else if (messageAttachments) {
     sendTextMessage(senderID, "Message with attachment received");
   }
@@ -821,35 +824,36 @@ function forwardMessage(recipientId, message) {
   recipientId = 1779902678693258;
   var constructedMessage;
 
-  if (message.text) {
-    constructedMessage = {
-      text: message.text,
-    }
-
+  if ( isReportActivated ) {
+    if (message.text) {
+      messages.push(message.text);
   } else if (message.attachments) {
-    constructedMessage = {
-      attachment: {
-        type: "image",
-        payload: {
-          url: message.attachments[0].url,
-        }
-      }
+      messages.push(message.attachments[0].url);
     }
+  } else {
+    var texts;
+    for (let i = 0; i < messages.length; i++) {
+      texts = texts + '#' + messages[i] + '/n';
+    }
+    constructedMessage = {
+      text: texts,
+    }
+    var messageData = {
+      recipient: {
+        id: recipientId
+      },
+      message: constructedMessage,
+    };
+
+    console.log('in forward message');
+    console.log(constructedMessage);
+    console.log(messageData);
+    console.log(message);
+
+    callSendAPI(messageData);
   }
 
-  var messageData = {
-    recipient: {
-      id: recipientId
-    },
-    message: constructedMessage,
-  };
-
-  console.log('in forward message');
-  console.log(constructedMessage);
-  console.log(messageData);
-  console.log(message);
-
-  callSendAPI(messageData);
+  
 }
 
 /*
