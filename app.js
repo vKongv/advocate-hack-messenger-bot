@@ -312,7 +312,7 @@ function receivedMessage(event) {
         sendAccountLinking(senderID);
         break;
 
-      case messageText.indexOf('report') !== -1 || isReportActivated:
+      case messageText.indexOf('report') !== -1:
         isReportActivated = true;
         console.log(event.message);
         forwardMessage(senderID, event.message);
@@ -840,6 +840,8 @@ function forwardMessage(recipientId, message) {
   ];
 
   if ( isReportActivated ) {
+      console.log(recipientId, message);
+    
     if (message) {
       var min = Math.ceil(0);
       var max = Math.floor(msgReplied.length);
