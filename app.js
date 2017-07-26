@@ -1034,7 +1034,9 @@ function sendList (recipientID) {
           }
       }
     }
-  }
+  };
+
+  callSendAPI(messageData);
 }
 
 /*
