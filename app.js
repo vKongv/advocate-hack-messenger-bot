@@ -847,12 +847,19 @@ function forwardMessage(recipientId, message) {
       console.log(message.attachments !== undefined);
     
     if ( message.mid !== undefined ) {
+      console.log(msgReplied.length);
+      
       var min = Math.ceil(0);
+      console.log(min);
+      
       var max = Math.floor(msgReplied.length);
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+      console.log(max);
+      
       const msgIndex = Math.floor(Math.random() * (max - min + 1)) + min;
+
       console.log(msgIndex);
       console.log(msgReplied[msgIndex]);
+      
       sendTextMessage(recipientId, msgReplied[msgIndex]);
     }
 
