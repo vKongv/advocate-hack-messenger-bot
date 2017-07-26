@@ -19,7 +19,6 @@ const
   request = require('request');
 
 var isReportActivated = false;
-var messages = [];
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -827,37 +826,51 @@ function sendAccountLinking(recipientId) {
  *
  */
 function forwardMessage(recipientId, message) {
-  recipientId = 1779902678693258;
+  moderatorId = 1779902678693258;
   var constructedMessage;
+  var msgReplied = [
+    "",
+    "Ok. I'm listening...",
+    "Pen and paper are ready.",
+    "I'm here to listen.",
+    "Continue.",
+  ];
 
   if ( isReportActivated ) {
+    if (message) {
+      min = Math.ceil(0);
+      max = Math.floor(msgReplied.length);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+      const msgIndex = Math.floor(Math.random() * (max - min + 1)) + min;
+      sendTextMessage(recipientId, msgReplied[msgIndex]);
+    }
+
     if (message.text) {
-      messages.push(message.text);
-  } else if (message.attachments) {
-      messages.push(message.attachments[0].url);
+      constructedMessage = {
+        text: 'Report:' + recipientId + '/n' + messages.text,
+      }
+    } else if (message.attachments) {
+      constructedMessage = {
+        text: 'Report:' + recipientId + '/n' + messages.attachments[0].url,
+      }
     }
-  } else {
-    var texts;
-    for (let i = 0; i < messages.length; i++) {
-      texts = texts + '#' + messages[i] + '/n';
-    }
-    constructedMessage = {
-      text: texts,
-    }
-    var messageData = {
+
+    var reportMessageData = {
       recipient: {
-        id: recipientId
+        id: moderatorId
       },
       message: constructedMessage,
-    };
+    }
 
-    console.log(texts);
-    console.log('in forward message');
     console.log(constructedMessage);
-    console.log(messageData);
-    console.log(message);
+    console.log(reportMessageData);
 
-    callSendAPI(messageData);
+    callSendAPI(reportMessageData);
+
+  } else {
+    sendTextMessage(recipientId, "All information you reported had been noted down.");
+    const endMsg = "End of Report" + recipientId;
+    sendTextMessage(moderatorId, "All information you reported had been noted down.");    
   }
 
   
