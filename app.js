@@ -1001,7 +1001,21 @@ function sendList (recipientID) {
                       //     webview_height_ratio: "tall",
                       //     fallback_url: "https://www.oculus.com"
                       // },
-                  }]  
+                  }],
+              buttons: [
+                  {
+                      title: "View Page",
+                      type: "postback",
+                      payload: {
+                        "buttons": [
+                          {
+                            "type": "web_url",
+                            "url": "https://www.facebook.com/imMeowMeowTheCat/", 
+                          }
+                        ]
+                      }                      
+                  }
+              ]  
           }
       }
     }
