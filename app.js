@@ -261,6 +261,11 @@ function receivedMessage(event) {
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
     switch (true) {
+      
+      case messageText.indexOf('list') !== -1 && !isReportActivated:
+        sendList(senderID);
+        break;
+
       case messageText.indexOf('image') !== -1 && !isReportActivated:
         sendImageMessage(senderID);
         break;
@@ -281,7 +286,7 @@ function receivedMessage(event) {
         sendFileMessage(senderID);
         break;
 
-      case messageText.indexOf('button') !== -1 && !isReportActivated:
+      case messageText.indexOf('menu') !== -1 && !isReportActivated:
         sendButtonMessage(senderID);
         break;
 
@@ -582,18 +587,22 @@ function sendButtonMessage(recipientId) {
         type: "template",
         payload: {
           template_type: "button",
-          text: "This is test text",
+          text: "What can I do for you?",
           buttons:[{
             type: "web_url",
             url: "https://www.oculus.com/en-us/rift/",
-            title: "Open Web URL"
-          }, {
+            title: "Anything happened today?"
+          }, 
+          {
             type: "postback",
-            title: "Trigger Postback",
-            payload: "DEVELOPER_DEFINED_PAYLOAD"
-          }, {
+            title: "I want to report now !",
+            payload: {
+              text: "I want to report now !",
+            }
+          }, 
+          {
             type: "phone_number",
-            title: "Call Phone Number",
+            title: "Call Emergency / NGO",
             payload: "+16505551234"
           }]
         }
@@ -946,6 +955,118 @@ function sendMultipleImages(recipientId) {
   };  
 
   callSendAPI(messageData);
+}
+
+function sendList (recipientID) {
+  const messageData = {
+    "recipient":{
+      "id":"RECIPIENT_ID"
+    }, "message": {
+      "attachment": {
+          "type": "template",
+          "payload": {
+              "template_type": "list",
+              "elements": [
+                  {
+                      "title": "Classic T-Shirt Collection",
+                      "image_url": "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                      "subtitle": "See all our colors",
+                      "default_action": {
+                          "type": "web_url",
+                          "url": "https://peterssendreceiveapp.ngrok.io/shop_collection",
+                          "messenger_extensions": true,
+                          "webview_height_ratio": "tall",
+                          "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                      },
+                      "buttons": [
+                          {
+                              "title": "View",
+                              "type": "web_url",
+                              "url": "https://peterssendreceiveapp.ngrok.io/collection",
+                              "messenger_extensions": true,
+                              "webview_height_ratio": "tall",
+                              "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                          }
+                      ]
+                  },
+                  {
+                      "title": "Classic White T-Shirt",
+                      "image_url": "https://peterssendreceiveapp.ngrok.io/img/white-t-shirt.png",
+                      "subtitle": "100% Cotton, 200% Comfortable",
+                      "default_action": {
+                          "type": "web_url",
+                          "url": "https://peterssendreceiveapp.ngrok.io/view?item=100",
+                          "messenger_extensions": true,
+                          "webview_height_ratio": "tall",
+                          "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                      },
+                      "buttons": [
+                          {
+                              "title": "Shop Now",
+                              "type": "web_url",
+                              "url": "https://peterssendreceiveapp.ngrok.io/shop?item=100",
+                              "messenger_extensions": true,
+                              "webview_height_ratio": "tall",
+                              "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                          }
+                      ]                
+                  },
+                  {
+                      "title": "Classic Blue T-Shirt",
+                      "image_url": "https://peterssendreceiveapp.ngrok.io/img/blue-t-shirt.png",
+                      "subtitle": "100% Cotton, 200% Comfortable",
+                      "default_action": {
+                          "type": "web_url",
+                          "url": "https://peterssendreceiveapp.ngrok.io/view?item=101",
+                          "messenger_extensions": true,
+                          "webview_height_ratio": "tall",
+                          "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                      },
+                      "buttons": [
+                          {
+                              "title": "Shop Now",
+                              "type": "web_url",
+                              "url": "https://peterssendreceiveapp.ngrok.io/shop?item=101",
+                              "messenger_extensions": true,
+                              "webview_height_ratio": "tall",
+                              "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                          }
+                      ]                
+                  },
+                  {
+                      "title": "Classic Black T-Shirt",
+                      "image_url": "https://peterssendreceiveapp.ngrok.io/img/black-t-shirt.png",
+                      "subtitle": "100% Cotton, 200% Comfortable",
+                      "default_action": {
+                          "type": "web_url",
+                          "url": "https://peterssendreceiveapp.ngrok.io/view?item=102",
+                          "messenger_extensions": true,
+                          "webview_height_ratio": "tall",
+                          "fallback_url": "https://peterssendreceiveapp.ngrok.io/"
+                      },
+                      "buttons": [
+                          {
+                              "title": "Shop Now",
+                              "type": "web_url",
+                              "url": "https://peterssendreceiveapp.ngrok.io/shop?item=102",
+                              "messenger_extensions": true,
+                              "webview_height_ratio": "tall",
+                              "fallback_url": "https://peterssendreceiveapp.ngrok.io/"                        
+                          }
+                      ]                
+                  }
+              ],
+              "buttons": [
+                  {
+                      "title": "View More",
+                      "type": "postback",
+                      "payload": "payload"                        
+                  }
+              ]  
+          }
+      }
+    }
+  }
 }
 
 /*
