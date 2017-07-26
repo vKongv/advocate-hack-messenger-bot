@@ -324,11 +324,6 @@ function receivedMessage(event) {
         forwardMessage(senderID, event.message);
         break;
 
-      case messageText.indexOf('end report') !== -1:
-        isReportActivated = false;
-        seqMessageOfReport = -1;
-        forwardMessage(senderID, event.message);        
-
       default:
         const numberOfMeow = Math.floor(2 * Math.random()) + 1;
         let message = '';
@@ -858,11 +853,11 @@ function forwardMessage(recipientId, message) {
 
       if ( message.text !== undefined ) {
         constructedMessage = {
-          text: 'Report: ' + recipientId + '\n ============'+ seqMessageOfReport +'============ \n' + message.text,
+          text: 'Report: ' + recipientId + '\n ============ '+ seqMessageOfReport +' ============ \n' + message.text,
         }
       } else if ( message.attachments !== undefined ) {
         constructedMessage = {
-          text: 'Report: ' + recipientId + '\n ============'+ seqMessageOfReport +'============ \n' + message.attachments[0].url,
+          text: 'Report: ' + recipientId + '\n ============ '+ seqMessageOfReport +' ============ \n' + message.attachments[0].url,
         }
       }
 
@@ -880,9 +875,10 @@ function forwardMessage(recipientId, message) {
 
     } else if (message.mid !== undefined && message.text == "end report") {
       sendTextMessage(recipientId, "All information you reported had been noted down.");
-      const endMsg = "==========   End of Report " + recipientId + "   ==========";
+      const endMsg = "==   End of Report " + recipientId + "   ==";
       sendTextMessage(moderatorId, endMsg);
       isReportActivated = false;
+      seqMessageOfReport = 0;
     }
   }
 }
