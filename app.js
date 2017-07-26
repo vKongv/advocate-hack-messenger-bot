@@ -583,6 +583,7 @@ function sendButtonMessage(recipientId) {
         payload: {
           template_type: "button",
           text: "This is test text",
+          image: "https://scontent.oculuscdn.com/t64.5771-25/12139289_377088419322281_3571472392767143936_n.png/hand-controller.png",
           buttons:[{
             type: "web_url",
             url: "https://www.oculus.com/en-us/rift/",
