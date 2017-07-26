@@ -311,7 +311,7 @@ function receivedMessage(event) {
 
       case 'report':
         isReportActivated = true;
-        forwardMessage(senderID, message);
+        forwardMessage(senderID, event.message);
         break;
 
       case 'end report':
