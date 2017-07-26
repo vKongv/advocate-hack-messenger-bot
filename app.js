@@ -976,16 +976,6 @@ function sendList (recipientID) {
                           webview_height_ratio: "tall",
                           fallback_url: "https://www.oculus.com"
                       },
-                      buttons: [
-                          {
-                              title: "View",
-                              type: "web_url",
-                              url: "https://www.oculus.com/experiences/rift/866068943510454/",
-                              messenger_extensions: false,
-                              webview_height_ratio: "tall",
-                              fallback_url: "https://www.oculus.com"                        
-                          }
-                      ]
                   },
                   {
                       title: "Classic White T-Shirt",
@@ -998,16 +988,6 @@ function sendList (recipientID) {
                           webview_height_ratio: "tall",
                           fallback_url: "https://www.oculus.com"
                       },
-                      buttons: [
-                          {
-                              title: "Shop Now",
-                              type: "web_url",
-                              url: "https://www.oculus.com/experiences/rift/866068943510454/",
-                              messenger_extensions: false,
-                              webview_height_ratio: "tall",
-                              fallback_url: "https://www.oculus.com"                       
-                          }
-                      ]                
                   },
                   {
                       title: "Classic Blue T-Shirt",
@@ -1020,16 +1000,6 @@ function sendList (recipientID) {
                           webview_height_ratio: "tall",
                           fallback_url: "https://www.oculus.com"
                       },
-                      buttons: [
-                          {
-                              title: "Shop Now",
-                              type: "web_url",
-                              url: "https://www.oculus.com/experiences/rift/866068943510454/",
-                              messenger_extensions: false,
-                              webview_height_ratio: "tall",
-                              fallback_url: "https://www.oculus.com"                        
-                          }
-                      ]                
                   }]  
           }
       }
