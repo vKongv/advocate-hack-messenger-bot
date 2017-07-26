@@ -441,13 +441,14 @@ function receivedAccountLink(event) {
 function sendImageMessage(recipientId) {
   var messageData = {
     recipient: {
-      id: recipientId
+      id: 1539856399445843
     },
     message: {
       attachment: {
         type: "image",
         payload: {
-          url: SERVER_URL + "/assets/rift.png"
+          url: "http://cdn1-www.dogtime.com/assets/uploads/gallery/30-impossibly-cute-puppies/impossibly-cute-puppy-2.jpg"
+          // url: SERVER_URL + "/assets/rift.png"
         }
       }
     }
