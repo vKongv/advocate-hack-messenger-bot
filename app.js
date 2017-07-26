@@ -882,7 +882,7 @@ function forwardMessage(recipientId, message) {
     } else if (message.mid !== undefined && message.text == "end report") {
       sendTextMessage(recipientId, "All information you reported had been noted down.");
       const endMsg = "End of Report" + recipientId;
-      sendTextMessage(moderatorId, "All information you reported had been noted down.");    
+      sendTextMessage(moderatorId, endMsg);    
     }
   }
 }
