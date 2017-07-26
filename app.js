@@ -974,7 +974,7 @@ function sendList (recipientID) {
                               title: "View",
                               type: "web_url",
                               url: "https://www.oculus.com/experiences/rift/866068943510454/",
-                              messenger_extensions: true,
+                              // messenger_extensions: true,
                               webview_height_ratio: "tall",
                               fallback_url: "https://www.oculus.com"                        
                           }
@@ -989,7 +989,7 @@ function sendList (recipientID) {
                               title: "Shop Now",
                               type: "web_url",
                               url: "https://www.oculus.com/experiences/rift/866068943510454/",
-                              messenger_extensions: true,
+                              // messenger_extensions: true,
                               webview_height_ratio: "tall",
                               fallback_url: "https://www.oculus.com"                       
                           }
@@ -1004,7 +1004,7 @@ function sendList (recipientID) {
                               title: "Shop Now",
                               type: "web_url",
                               url: "https://www.oculus.com/experiences/rift/866068943510454/",
-                              messenger_extensions: true,
+                              // messenger_extensions: true,
                               webview_height_ratio: "tall",
                               fallback_url: "https://www.oculus.com"                        
                           }
