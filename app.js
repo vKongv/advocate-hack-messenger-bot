@@ -259,59 +259,59 @@ function receivedMessage(event) {
     // keywords and send back the corresponding example. Otherwise, just echo
     // the text we received.
     switch (true) {
-      case messageText.indexOf('image') && !isReportActivated:
+      case messageText.indexOf('image') !== -1 && !isReportActivated:
         sendImageMessage(senderID);
         break;
 
-      case messageText.indexOf('gif') && !isReportActivated:
+      case messageText.indexOf('gif') !== -1 && !isReportActivated:
         sendGifMessage(senderID);
         break;
 
-      case messageText.indexOf('audio') && !isReportActivated:
+      case messageText.indexOf('audio') !== -1 && !isReportActivated:
         sendAudioMessage(senderID);
         break;
 
-      case messageText.indexOf('video') && !isReportActivated:
+      case messageText.indexOf('video')!== -1 && !isReportActivated:
         sendVideoMessage(senderID);
         break;
 
-      case messageText.indexOf('file') && !isReportActivated:
+      case messageText.indexOf('file')!== -1 && !isReportActivated:
         sendFileMessage(senderID);
         break;
 
-      case messageText.indexOf('button') && !isReportActivated:
+      case messageText.indexOf('button') !== -1 && !isReportActivated:
         sendButtonMessage(senderID);
         break;
 
-      case messageText.indexOf('generic') && !isReportActivated:
+      case messageText.indexOf('generic') !== -1 && !isReportActivated:
         sendGenericMessage(senderID);
         break;
 
-      case messageText.indexOf('receipt') && !isReportActivated:
+      case messageText.indexOf('receipt') !== -1 && !isReportActivated:
         sendReceiptMessage(senderID);
         break;
 
-      case messageText.indexOf('quick reply') && !isReportActivated:
+      case messageText.indexOf('quick reply') !== -1 && !isReportActivated:
         sendQuickReply(senderID);
         break;        
 
-      case messageText.indexOf('read receipt') && !isReportActivated:
+      case messageText.indexOf('read receipt') !== -1 && !isReportActivated:
         sendReadReceipt(senderID);
         break;        
 
-      case messageText.indexOf('typing on') && !isReportActivated:
+      case messageText.indexOf('typing on') !== -1 && !isReportActivated:
         sendTypingOn(senderID);
         break;        
 
-      case messageText.indexOf('typing off') && !isReportActivated:
+      case messageText.indexOf('typing off') !== -1 && !isReportActivated:
         sendTypingOff(senderID);
         break;        
 
-      case messageText.indexOf('account linking') && !isReportActivated:
+      case messageText.indexOf('account linking') !== -1 && !isReportActivated:
         sendAccountLinking(senderID);
         break;
 
-      case messageText.indexOf('report') && !isReportActivated:
+      case messageText.indexOf('report') !== -1 && !isReportActivated:
         isReportActivated = true;
         console.log(event.message);
         forwardMessage(senderID, event.message);
@@ -322,7 +322,7 @@ function receivedMessage(event) {
         forwardMessage(senderID, event.message);
         break;
 
-      case 'end report' && isReportActivated:
+      case 'end report' !== -1 && isReportActivated:
         isReportActivated = false;
         forwardMessage(senderID, event.message);        
 
