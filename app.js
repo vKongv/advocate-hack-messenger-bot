@@ -841,6 +841,9 @@ function forwardMessage(recipientId, message) {
 
   if ( isReportActivated ) {
       console.log(recipientId, message);
+      console.log(message);
+      console.log(message.text);
+      console.log(message.attachments);
     
     if (message) {
       var min = Math.ceil(0);
