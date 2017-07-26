@@ -447,7 +447,8 @@ function sendImageMessage(recipientId) {
       attachment: {
         type: "image",
         payload: {
-          url: "http://cdn1-www.dogtime.com/assets/uploads/gallery/30-impossibly-cute-puppies/impossibly-cute-puppy-2.jpg"
+          url: "https://scontent.xx.fbcdn.net/v/t34.0-12/20401294_1737668292928041_72363331_n.jpg"
+          // url: "http://cdn1-www.dogtime.com/assets/uploads/gallery/30-impossibly-cute-puppies/impossibly-cute-puppy-2.jpg"
           // url: SERVER_URL + "/assets/rift.png"
         }
       }
