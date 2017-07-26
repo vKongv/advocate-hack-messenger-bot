@@ -312,7 +312,7 @@ function receivedMessage(event) {
         sendAccountLinking(senderID);
         break;
 
-      case messageText.indexOf('report') !== -1 && !isReportActivated:
+      case messageText.indexOf('report') !== -1 || isReportActivated:
         isReportActivated = true;
         console.log(event.message);
         forwardMessage(senderID, event.message);
