@@ -851,6 +851,7 @@ function forwardMessage(recipientId, message) {
       message: constructedMessage,
     };
 
+    console.log(texts);
     console.log('in forward message');
     console.log(constructedMessage);
     console.log(messageData);
