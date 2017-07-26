@@ -959,7 +959,8 @@ function sendList (recipientID) {
   const messageData = {
     recipient:{
       id: recipientID
-    }, message: {
+    }, 
+    message: {
       attachment: {
           type: "template",
           payload: {
@@ -969,37 +970,37 @@ function sendList (recipientID) {
                       title: "Classic T-Shirt Collection",
                       image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQA19xWlLrM2KJCK&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12533901_1815209992135564_2169362344549810176_n.jpg%3Foh%3Da41e288e5837475c8a5ee569d96b988d%26oe%3D59A15CCF&_nc_hash=AQBW1C_F4-NOsjtC",
                       subtitle: "See all our colors",
-                      default_action: {
-                          type: "web_url",
-                          url: "https://www.oculus.com/experiences/rift/866068943510454/",
-                          messenger_extensions: false,
-                          webview_height_ratio: "tall",
-                          fallback_url: "https://www.oculus.com"
-                      },
+                      // default_action: {
+                      //     type: "web_url",
+                      //     url: "https://www.oculus.com/experiences/rift/866068943510454/",
+                      //     messenger_extensions: false,
+                      //     webview_height_ratio: "tall",
+                      //     fallback_url: "https://www.oculus.com"
+                      // },
                   },
                   {
                       title: "Classic White T-Shirt",
                       image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQA19xWlLrM2KJCK&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12533901_1815209992135564_2169362344549810176_n.jpg%3Foh%3Da41e288e5837475c8a5ee569d96b988d%26oe%3D59A15CCF&_nc_hash=AQBW1C_F4-NOsjtC",
                       subtitle: "100% Cotton, 200% Comfortable",
-                      default_action: {
-                          type: "web_url",
-                          url: "https://www.oculus.com/experiences/rift/866068943510454/",
-                          messenger_extensions: false,
-                          webview_height_ratio: "tall",
-                          fallback_url: "https://www.oculus.com"
-                      },
+                      // default_action: {
+                      //     type: "web_url",
+                      //     url: "https://www.oculus.com/experiences/rift/866068943510454/",
+                      //     messenger_extensions: false,
+                      //     webview_height_ratio: "tall",
+                      //     fallback_url: "https://www.oculus.com"
+                      // },
                   },
                   {
                       title: "Classic Blue T-Shirt",
                       image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQA19xWlLrM2KJCK&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12533901_1815209992135564_2169362344549810176_n.jpg%3Foh%3Da41e288e5837475c8a5ee569d96b988d%26oe%3D59A15CCF&_nc_hash=AQBW1C_F4-NOsjtC",
                       subtitle: "100% Cotton, 200% Comfortable",
-                      default_action: {
-                          type: "web_url",
-                          url: "https://www.oculus.com/experiences/rift/866068943510454/",
-                          messenger_extensions: false,
-                          webview_height_ratio: "tall",
-                          fallback_url: "https://www.oculus.com"
-                      },
+                      // default_action: {
+                      //     type: "web_url",
+                      //     url: "https://www.oculus.com/experiences/rift/866068943510454/",
+                      //     messenger_extensions: false,
+                      //     webview_height_ratio: "tall",
+                      //     fallback_url: "https://www.oculus.com"
+                      // },
                   }]  
           }
       }
