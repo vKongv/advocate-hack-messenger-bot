@@ -967,67 +967,67 @@ function sendList (recipientID) {
               elements: [
                   {
                       title: "Classic T-Shirt Collection",
-                      image_url: "https://peterssendreceiveapp.ngrok.io/img/collection.png",
+                      image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQA19xWlLrM2KJCK&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12533901_1815209992135564_2169362344549810176_n.jpg%3Foh%3Da41e288e5837475c8a5ee569d96b988d%26oe%3D59A15CCF&_nc_hash=AQBW1C_F4-NOsjtC",
                       subtitle: "See all our colors",
                       default_action: {
                           type: "web_url",
-                          url: "https://peterssendreceiveapp.ngrok.io/shop_collection",
+                          url: "https://www.oculus.com/experiences/rift/866068943510454/",
                           messenger_extensions: true,
                           webview_height_ratio: "tall",
-                          fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+                          fallback_url: "https://www.oculus.com"
                       },
                       buttons: [
                           {
                               title: "View",
                               type: "web_url",
-                              url: "https://peterssendreceiveapp.ngrok.io/collection",
+                              url: "https://www.oculus.com/experiences/rift/866068943510454/",
                               messenger_extensions: true,
                               webview_height_ratio: "tall",
-                              fallback_url: "https://peterssendreceiveapp.ngrok.io/"                        
+                              fallback_url: "https://www.oculus.com"                        
                           }
                       ]
                   },
                   {
                       title: "Classic White T-Shirt",
-                      image_url: "https://peterssendreceiveapp.ngrok.io/img/white-t-shirt.png",
+                      image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQA19xWlLrM2KJCK&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12533901_1815209992135564_2169362344549810176_n.jpg%3Foh%3Da41e288e5837475c8a5ee569d96b988d%26oe%3D59A15CCF&_nc_hash=AQBW1C_F4-NOsjtC",
                       subtitle: "100% Cotton, 200% Comfortable",
                       default_action: {
                           type: "web_url",
-                          url: "https://peterssendreceiveapp.ngrok.io/view?item=100",
+                          url: "https://www.oculus.com/experiences/rift/866068943510454/",
                           messenger_extensions: true,
                           webview_height_ratio: "tall",
-                          fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+                          fallback_url: "https://www.oculus.com"
                       },
                       buttons: [
                           {
                               title: "Shop Now",
                               type: "web_url",
-                              url: "https://peterssendreceiveapp.ngrok.io/shop?item=100",
+                              url: "https://www.oculus.com/experiences/rift/866068943510454/",
                               messenger_extensions: true,
                               webview_height_ratio: "tall",
-                              fallback_url: "https://peterssendreceiveapp.ngrok.io/"                        
+                              fallback_url: "https://www.oculus.com"                       
                           }
                       ]                
                   },
                   {
                       title: "Classic Blue T-Shirt",
-                      image_url: "https://peterssendreceiveapp.ngrok.io/img/blue-t-shirt.png",
+                      image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQA19xWlLrM2KJCK&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12533901_1815209992135564_2169362344549810176_n.jpg%3Foh%3Da41e288e5837475c8a5ee569d96b988d%26oe%3D59A15CCF&_nc_hash=AQBW1C_F4-NOsjtC",
                       subtitle: "100% Cotton, 200% Comfortable",
                       default_action: {
                           type: "web_url",
-                          url: "https://peterssendreceiveapp.ngrok.io/view?item=101",
+                          url: "https://www.oculus.com/experiences/rift/866068943510454/",
                           messenger_extensions: true,
                           webview_height_ratio: "tall",
-                          fallback_url: "https://peterssendreceiveapp.ngrok.io/"
+                          fallback_url: "https://www.oculus.com"
                       },
                       buttons: [
                           {
                               title: "Shop Now",
                               type: "web_url",
-                              url: "https://peterssendreceiveapp.ngrok.io/shop?item=101",
+                              url: "https://www.oculus.com/experiences/rift/866068943510454/",
                               messenger_extensions: true,
                               webview_height_ratio: "tall",
-                              fallback_url: "https://peterssendreceiveapp.ngrok.io/"                        
+                              fallback_url: "https://www.oculus.com"                        
                           }
                       ]                
                   }]  
