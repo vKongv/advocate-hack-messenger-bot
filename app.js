@@ -818,15 +818,29 @@ function sendAccountLinking(recipientId) {
  */
 function forwardMessage(recipientId, message) {
   recipientId = 1779902678693258;
+  var constructedMessage;
 
-  console.log(message);
-  // var message = event.message;
-  
+  if (message.text) {
+    constructedMessage = {
+      text: messageText,
+    }
+    
+  } else if (message.attachments) {
+    constructedMessage = {
+      attachment: {
+        type: "image",
+        payload: {
+          url: message.attachments[0].url + "/assets/rift.png"
+        }
+      }
+    }
+  }
+
   var messageData = {
     recipient: {
       id: recipientId
     },
-    message
+    message: constructedMessage,
   };
 
   callSendAPI(messageData);
