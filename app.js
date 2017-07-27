@@ -1087,6 +1087,7 @@ function callUserProfileAPI (userId) {
       // console.log(info);
       // console.log(info["first_name"]);
       // return info;
+      userProfile = response.json(body);
     }
   })
   console.log(userProfile);
