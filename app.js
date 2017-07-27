@@ -341,7 +341,7 @@ function receivedMessage(event) {
         }
 
         if (messageText == "hey") {
-          message = "hey"+ event.recipient.recipient_name;
+          message = "hey"+ event.recipient.name;
         }
         
         sendTextMessage(senderID, message);
