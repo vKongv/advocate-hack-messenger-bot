@@ -942,7 +942,7 @@ function getUserInfo(userId, field) {
                                 title: "rift",
                                 subtitle: "Next-generation virtual reality",
                                 // item_url: "https://www.facebook.com/nowhat.hk/videos/256977024819189/?hc_ref=ARRh6DTPy4r1jtB2GSUtXVRR6vKCt-aCvUDzCR40MqdMzXJsJKOWXdqvnOh9u-lx8oY",               
-                                image_url: "https://www.facebook.com/nowhat.hk/videos/256977024819189",
+                                video_url: "https://www.facebook.com/nowhat.hk/videos/256977024819189",
                                 default_action: {
                                     type: "web_url",
                                     url: "https://www.facebook.com/nowhat.hk/videos/256977024819189/?hc_ref=ARRh6DTPy4r1jtB2GSUtXVRR6vKCt-aCvUDzCR40MqdMzXJsJKOWXdqvnOh9u-lx8oY",
