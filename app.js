@@ -1083,7 +1083,9 @@ function callUserProfileAPI (userId) {
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log("Successfully called User Profile API for recipient %s", userId);      
-      var info = JSON.parse(body)
+      var info = JSON.parse(body);
+      console.log(info);
+      console.log(info["first_name"]);
       return info;
     }
   })
