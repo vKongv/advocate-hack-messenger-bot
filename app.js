@@ -1077,7 +1077,7 @@ function callUserProfileAPI (userId) {
     if (!error && response.statusCode == 200) {
       // var recipientId = body.recipient_id;
       console.log("Successfully called Send API for recipient %s", userId);
-      return (response);
+      return (body);
     } else {
       console.error("Failed calling User Profile API", response.statusCode, response.statusMessage, body.error);
       return (error);
