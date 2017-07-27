@@ -343,7 +343,7 @@ function receivedMessage(event) {
         }
 
         if (messageText == "hey") {
-          message = "hey"+ getUserInfo(senderID, "first_name");
+          message = "hey "+ getUserInfo(senderID, "first_name");
         }
         
         sendTextMessage(senderID, message);
@@ -362,7 +362,8 @@ function receivedMessage(event) {
 }
 
 function getUserInfo(userId, field) {
-  var userInfo = callUserProfileAPI(userId);  
+  var userInfo = callUserProfileAPI(userId);
+  console.log(userInfo);
   return userInfo[field];
 }
 
