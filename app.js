@@ -1071,8 +1071,8 @@ function callSendAPI(messageData) {
  *
  */
 function callUserProfileAPI (userId) {
-  var userProfile;
-  var err;
+  // var userProfile;
+  // var err;
   request({
     uri: 'https://graph.facebook.com/v2.6/'+ userId,
     qs: { 
@@ -1084,11 +1084,11 @@ function callUserProfileAPI (userId) {
       console.log("Successfully called User Profile API for recipient %s", userId);      
       var info = JSON.parse(body)
       console.log(info);
-      res.send(info);
+      response.send(info);
     }
   })
   
-  return userProfile;
+  // return userProfile;
 }
 
 // Start server
