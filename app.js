@@ -339,6 +339,11 @@ function receivedMessage(event) {
         for (let i = 0; i < numberOfMeow; i++) {
           message += 'Meow' + ' ';
         }
+
+        if (messageText == "hey") {
+          message = "hey"+ event.recipient.recipient_name;
+        }
+        
         sendTextMessage(senderID, message);
     }
     
