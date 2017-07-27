@@ -362,7 +362,7 @@ function receivedMessage(event) {
 
 function getUserInfo(userId, field) {
   var info = callUserProfileAPI(userId);
-  var result = info.field;
+  var result = info[field];
   console.log(info);
   return result;
 }
