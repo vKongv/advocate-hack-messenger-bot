@@ -1069,7 +1069,7 @@ function callUserProfileAPI (userId) {
     uri: 'https://graph.facebook.com/v2.6/me/messages',
     uri: 'https://graph.facebook.com/v2.6/'+ userId,
     qs: { 
-      fields: "first_name,last_name,profile_pic,locale,timezone,gender",
+      // fields: "first_name,last_name,profile_pic,locale,timezone,gender",
       access_token: PAGE_ACCESS_TOKEN 
     },
     method: 'GET',
