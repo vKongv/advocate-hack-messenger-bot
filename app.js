@@ -937,7 +937,7 @@ function getUserInfo(userId, field) {
                     attachment:{
                         type:"video",
                         payload:{
-                            url:"https://www.facebook.com/nowhat.hk/videos/256977024819189/",
+                            url:"https://www.youtube.com/embed/gFE0wK5Q6wU",
                         }
                     }
                 }
