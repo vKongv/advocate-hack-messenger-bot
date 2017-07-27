@@ -239,7 +239,6 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
   var quickReply = message.quick_reply;
 
-  callUserProfileAPI(senderID);
 
   if (isEcho) {
     // Just logging message echoes to console
@@ -344,7 +343,7 @@ function receivedMessage(event) {
         }
 
         if (messageText == "hey") {
-          message = "hey";
+          message = "hey"+ getUserInfo(senderID, "first_name");
         }
         
         sendTextMessage(senderID, message);
@@ -362,9 +361,9 @@ function receivedMessage(event) {
   }
 }
 
-function getUserInfo(info) {
-  console.log(info);
-  return info;
+function getUserInfo(userId, field) {
+  var userInfo = callUserProfileAPI(userId);  
+  return userInfo[field];
 }
 
 
@@ -1074,31 +1073,26 @@ function callSendAPI(messageData) {
 function callUserProfileAPI (userId) {
   var userProfile;
   // var err;
-  return new Promise (
-    function(resolve, reject) {
-      request({
-        uri: 'https://graph.facebook.com/v2.6/'+ userId,
-        qs: { 
-          access_token: PAGE_ACCESS_TOKEN 
-        },
-        method: 'GET',
-      }, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-          console.log("Successfully called User Profile API for recipient %s", userId);      
-          userProfile = JSON.parse(body);
-          // console.log(userProfile);
-          console.log(userProfile["first_name"]);      // return info;
-        }
-        resolve(userProfile);
-      })
-    }).then(function(userProfile){
-      console.log(userProfile);
-    
-    // return userProfile;
-  })
-
-  
-  // return userProfile;
+  return new Promise (function(resolve, reject) {
+    request({
+      uri: 'https://graph.facebook.com/v2.6/'+ userId,
+      qs: { 
+        access_token: PAGE_ACCESS_TOKEN 
+      },
+      method: 'GET',
+    }, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        console.log("Successfully called User Profile API for recipient %s", userId);      
+        userProfile = JSON.parse(body);
+        // console.log(userProfile);
+        console.log(userProfile["first_name"]);      // return info;
+      }
+      resolve(userProfile);
+    })
+  }).then(function(userProfile){
+    console.log(userProfile);
+    return userProfile;
+  });
 }
 
 // Start server
