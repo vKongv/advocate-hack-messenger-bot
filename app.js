@@ -1083,10 +1083,10 @@ function callUserProfileAPI (userId) {
     if (!error && response.statusCode == 200) {
       // var recipientId = body.recipient_id;
       console.log("Successfully called User Profile API for recipient %s", userId);
-      return (response.body);
+      return response.body;
     } else {
       console.error("Failed calling User Profile API", response.statusCode, response.statusMessage, body.error);
-      return (body.error);
+      return body.error;
     }
   });  
 }
