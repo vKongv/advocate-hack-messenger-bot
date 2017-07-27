@@ -605,7 +605,10 @@ function sendButtonMessage(recipientId) {
           // },
           {
             type: "postback",
-            payload: "https://www.facebook.com/nowhat.hk/videos/256977024819189/?hc_ref=ARRh6DTPy4r1jtB2GSUtXVRR6vKCt-aCvUDzCR40MqdMzXJsJKOWXdqvnOh9u-lx8oY",
+            payload: 
+            {
+              text: "https://www.facebook.com/nowhat.hk/videos/256977024819189/?hc_ref=ARRh6DTPy4r1jtB2GSUtXVRR6vKCt-aCvUDzCR40MqdMzXJsJKOWXdqvnOh9u-lx8oY",
+            },
             title: "View Post"
           }]
         }
