@@ -1088,8 +1088,9 @@ function callUserProfileAPI (userId) {
       console.log(userProfile["first_name"]);      // return info;
     }
     console.log(userProfile["first_name"]);
+  }).then(function(res){
+      console.log(res);
   });
-  console.log(userProfile);
   // return userProfile;
 }
 
