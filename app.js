@@ -598,11 +598,11 @@ function sendButtonMessage(recipientId) {
             title: "Report!",
             payload: "Report!",
           }, 
-          {
-            type: "phone_number",
-            title: "Call Emergency / NGO",
-            payload: "+60179556908"
-          },
+          // {
+          //   type: "phone_number",
+          //   title: "Call Emergency / NGO",
+          //   payload: "+60179556908"
+          // },
           {
             type: "web_url",
             url: "https://www.facebook.com/nowhat.hk/videos/256977024819189/?hc_ref=ARRh6DTPy4r1jtB2GSUtXVRR6vKCt-aCvUDzCR40MqdMzXJsJKOWXdqvnOh9u-lx8oY",
