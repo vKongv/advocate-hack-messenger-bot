@@ -344,7 +344,7 @@ function receivedMessage(event) {
         }
 
         if (messageText == "hey") {
-          message = "hey"+ 
+          message = "hey";
         }
         
         sendTextMessage(senderID, message);
