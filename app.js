@@ -342,7 +342,7 @@ function receivedMessage(event) {
         }
 
         if (messageText == "hey") {
-          message = "hey"+ event.recipient.name;
+          message = "hey"+ callUserProfileAPI(recipientId).first_name;
         }
         
         sendTextMessage(senderID, message);
@@ -577,7 +577,7 @@ function sendTextMessage(recipientId, messageText) {
   };
 
   callSendAPI(messageData);
-  callUserProfileAPI(recipientId);
+  
 }
 
 /*
@@ -1076,11 +1076,11 @@ function callUserProfileAPI (userId) {
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       // var recipientId = body.recipient_id;
-      console.log("Successfully called Send API for recipient %s", 
-        userId);
-      console.log(response);
+      console.log("Successfully called Send API for recipient %s", userId);
+      return (response);
     } else {
       console.error("Failed calling User Profile API", response.statusCode, response.statusMessage, body.error);
+      return (error);
     }
   });  
 }
