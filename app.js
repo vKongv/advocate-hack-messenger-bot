@@ -1066,7 +1066,7 @@ function callSendAPI(messageData) {
  */
 function callUserProfileAPI (userId) {
   request({
-    uri: 'https://graph.facebook.com/v2.6/me/messages',
+    // uri: 'https://graph.facebook.com/v2.6/me/messages',
     uri: 'https://graph.facebook.com/v2.6/'+ userId,
     qs: { 
       // fields: "first_name,last_name,profile_pic,locale,timezone,gender",
