@@ -1074,7 +1074,7 @@ function callSendAPI(messageData) {
 function callUserProfileAPI (userId) {
   var userProfile;
   // var err;
-  request({
+  return new Promise (request({
     uri: 'https://graph.facebook.com/v2.6/'+ userId,
     qs: { 
       access_token: PAGE_ACCESS_TOKEN 
@@ -1087,12 +1087,14 @@ function callUserProfileAPI (userId) {
       // console.log(userProfile);
       console.log(userProfile["first_name"]);      // return info;
     }
-    response.on('end', function () {
-        console.log(userProfile);
-    });
-  });
+    resolve(userProfile);
+  })).then(function(userProfile){
+      console.log(userProfile);
+    
+    // return userProfile;
+  })
 
-  console.log("end: "+ userProfile);
+  
   // return userProfile;
 }
 
