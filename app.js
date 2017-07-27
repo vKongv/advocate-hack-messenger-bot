@@ -1071,6 +1071,8 @@ function callSendAPI(messageData) {
  *
  */
 function callUserProfileAPI (userId) {
+  var userProfile;
+  var err;
   request({
     // uri: 'https://graph.facebook.com/v2.6/me/messages',
     uri: 'https://graph.facebook.com/v2.6/'+ userId,
@@ -1083,12 +1085,13 @@ function callUserProfileAPI (userId) {
     if (!error && response.statusCode == 200) {
       // var recipientId = body.recipient_id;
       console.log("Successfully called User Profile API for recipient %s", userId);
-      return response.body;
+      userProfile = response.body;
     } else {
       console.error("Failed calling User Profile API", response.statusCode, response.statusMessage, body.error);
-      return body.error;
+      err = body.error;
     }
-  });  
+  });
+  return userProfile;
 }
 
 // Start server
