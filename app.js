@@ -342,7 +342,8 @@ function receivedMessage(event) {
         }
 
         if (messageText == "hey") {
-          message = "hey"+ callUserProfileAPI(senderID).first_name;
+          console.log(callUserProfileAPI(senderID));
+          message = "hey";
         }
         
         sendTextMessage(senderID, message);
