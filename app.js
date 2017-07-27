@@ -941,8 +941,13 @@ function getUserInfo(userId, field) {
                             elements: [{
                                 title: "rift",
                                 // subtitle: "Next-generation virtual reality",
-                                item_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQBta-66htflwi-K&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12602069_1350608345000055_9152154959326740480_n.jpg%3Foh%3D94a78537864e25e5b0c0067dfe89bc4a%26oe%3D59B5B9E8&_nc_hash=AQDXEZQ5Q2GI33IR",               
-                                image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQBta-66htflwi-K&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12602069_1350608345000055_9152154959326740480_n.jpg%3Foh%3D94a78537864e25e5b0c0067dfe89bc4a%26oe%3D59B5B9E8&_nc_hash=AQDXEZQ5Q2GI33IR",
+                                item_url: "https://www.facebook.com/nowhat.hk/videos/256977024819189/?hc_ref=ARRh6DTPy4r1jtB2GSUtXVRR6vKCt-aCvUDzCR40MqdMzXJsJKOWXdqvnOh9u-lx8oY",               
+                                // image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQBta-66htflwi-K&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12602069_1350608345000055_9152154959326740480_n.jpg%3Foh%3D94a78537864e25e5b0c0067dfe89bc4a%26oe%3D59B5B9E8&_nc_hash=AQDXEZQ5Q2GI33IR",
+                                default_action: {
+                                    type: "web_url",
+                                    url: "https://www.facebook.com/nowhat.hk/videos/256977024819189/?hc_ref=ARRh6DTPy4r1jtB2GSUtXVRR6vKCt-aCvUDzCR40MqdMzXJsJKOWXdqvnOh9u-lx8oY",
+                                    webview_height_ratio: "tall",
+                                },
                                 // buttons: [{
                                     //   type: "web_url",
                                     //   url: "https://www.oculus.com/en-us/rift/",
