@@ -342,7 +342,7 @@ function receivedMessage(event) {
         }
 
         if (messageText == "hey") {
-          console.log(callUserProfileAPI(senderID));
+          getUserInfo(senderID);
           message = "hey";
         }
         
@@ -359,6 +359,11 @@ function receivedMessage(event) {
         sendTextMessage(senderID, "Message with attachment received");
     }
   }
+}
+
+function getUserInfo(userId) {
+  var info = callUserProfileAPI(userId);
+  console.log(info);
 }
 
 
