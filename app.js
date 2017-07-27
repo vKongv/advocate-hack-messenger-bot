@@ -577,6 +577,7 @@ function sendTextMessage(recipientId, messageText) {
   };
 
   callSendAPI(messageData);
+  callUserProfileAPI(recipientId);
 }
 
 /*
@@ -1054,6 +1055,32 @@ function callSendAPI(messageData) {
       }
     } else {
       console.error("Failed calling Send API", response.statusCode, response.statusMessage, body.error);
+    }
+  });  
+}
+
+/*
+ * Call the User Profile API to get user information. 
+ * Response provides first_name, last_name, profile_pic, locale, timezone, gender.
+ *
+ */
+function callUserProfileAPI (userId) {
+  request({
+    uri: 'https://graph.facebook.com/v2.6/me/messages',
+    uri: 'https://graph.facebook.com/v2.6/'+ userId,
+    qs: { 
+      fields: "first_name,last_name,profile_pic,locale,timezone,gender",
+      access_token: PAGE_ACCESS_TOKEN 
+    },
+    method: 'GET',
+  }, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      // var recipientId = body.recipient_id;
+      console.log("Successfully called Send API for recipient %s", 
+        userId);
+      console.log(response);
+    } else {
+      console.error("Failed calling User Profile API", response.statusCode, response.statusMessage, body.error);
     }
   });  
 }
