@@ -342,7 +342,7 @@ function receivedMessage(event) {
         }
 
         if (messageText == "hey") {
-          message = "hey "+ getUserInfo(senderID, "first_name");
+          message = "hey "
         }
         
         sendTextMessage(senderID, message);
@@ -360,11 +360,8 @@ function receivedMessage(event) {
   }
 }
 
-function getUserInfo(userId, field) {
-  var info = callUserProfileAPI(userId);
-  // var result = info[field];
+function getUserInfo(info) {
   console.log(info);
-  // return result;
 }
 
 
@@ -1086,6 +1083,7 @@ function callUserProfileAPI (userId) {
       userProfile = JSON.parse(body);
       console.log(userProfile);
       console.log(userProfile["first_name"]);
+      getUserInfo(userProfile);
       // return info;
     }
   });
