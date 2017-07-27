@@ -1084,13 +1084,13 @@ function callUserProfileAPI (userId) {
     if (!error && response.statusCode == 200) {
       console.log("Successfully called User Profile API for recipient %s", userId);      
       userProfile = JSON.parse(body);
-      console.log(userProfile);
+      // console.log(userProfile);
       console.log(userProfile["first_name"]);      // return info;
     }
     console.log(userProfile["first_name"]);
-  }).then(function(res){
-      console.log(res);
   });
+
+  console.log("end: "+ userProfile);
   // return userProfile;
 }
 
