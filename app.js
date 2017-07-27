@@ -281,7 +281,7 @@ function receivedMessage(event) {
                 break;
             
             case messageText.indexOf('video')!== -1 && !isReportActivated:
-                sendVideoMessage(senderID);
+                sendVideo(senderID);
                 break;
             
             case messageText.indexOf('file')!== -1 && !isReportActivated:
@@ -926,6 +926,26 @@ function getUserInfo(userId, field) {
                     seqMessageOfReport = 0;
                 }
             }
+        }
+
+        function sendVideo(recipientId) {
+            var messageData = {
+                recipient:{
+                    id: recipientId,
+                },
+                message:{
+                    attachment:{
+                        type:"video",
+                        payload:{
+                            url:"https://www.facebook.com/nowhat.hk/videos/256977024819189/",
+                            title: "Russell Peter",
+                        }
+                    }
+                }
+            };
+
+            callSendAPI(messageData);
+
         }
         
         function sendMultipleImages(recipientId) {
