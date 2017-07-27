@@ -362,7 +362,11 @@ function receivedMessage(event) {
 }
 
 function getUserInfo(userId, field) {
-  var userInfo = callUserProfileAPI(userId);
+  var userInfo = callUserProfileAPI(userId).then(
+    function(userProfile){
+      console.log(userProfile);
+      return userProfile;
+    });
   console.log(userInfo);
   return userInfo[field];
 }
@@ -1090,9 +1094,6 @@ function callUserProfileAPI (userId) {
       }
       resolve(userProfile);
     })
-  }).then(function(userProfile){
-    console.log(userProfile);
-    return userProfile;
   });
 }
 
