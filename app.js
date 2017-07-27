@@ -591,17 +591,22 @@ function sendButtonMessage(recipientId) {
           buttons:[{
             type: "web_url",
             url: "https://www.oculus.com/en-us/rift/",
-            title: "Anything happened today?"
+            title: "What's new?"
           }, 
           {
             type: "postback",
-            title: "I want to report now !",
-            payload: "I want to report now !",
+            title: "Report!",
+            payload: "Report!",
           }, 
           {
             type: "phone_number",
             title: "Call Emergency / NGO",
-            payload: "+16505551234"
+            payload: "+60179556908"
+          },
+          {
+            type: "web_url",
+            url: "https://www.facebook.com/nowhat.hk/videos/256977024819189/?hc_ref=ARRh6DTPy4r1jtB2GSUtXVRR6vKCt-aCvUDzCR40MqdMzXJsJKOWXdqvnOh9u-lx8oY",
+            title: "View Post"
           }]
         }
       }
