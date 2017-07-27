@@ -239,6 +239,8 @@ function receivedMessage(event) {
   var messageAttachments = message.attachments;
   var quickReply = message.quick_reply;
 
+  callUserProfileAPI(senderID);
+
   if (isEcho) {
     // Just logging message echoes to console
     console.log("Received echo for message %s and app %d with metadata %s", 
@@ -342,7 +344,7 @@ function receivedMessage(event) {
         }
 
         if (messageText == "hey") {
-          message = "hey "
+          message = "hey"+ 
         }
         
         sendTextMessage(senderID, message);
@@ -362,6 +364,7 @@ function receivedMessage(event) {
 
 function getUserInfo(info) {
   console.log(info);
+  return info;
 }
 
 
@@ -1082,14 +1085,11 @@ function callUserProfileAPI (userId) {
       console.log("Successfully called User Profile API for recipient %s", userId);      
       userProfile = JSON.parse(body);
       console.log(userProfile);
-      console.log(userProfile["first_name"]);
-      getUserInfo(userProfile);
-      // return info;
+      console.log(userProfile["first_name"]);      // return info;
     }
+    console.log(userProfile["first_name"]);
   });
-
   console.log(userProfile);
-  
   // return userProfile;
 }
 
