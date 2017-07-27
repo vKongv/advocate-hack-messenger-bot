@@ -1074,25 +1074,20 @@ function callUserProfileAPI (userId) {
   var userProfile;
   var err;
   request({
-    // uri: 'https://graph.facebook.com/v2.6/me/messages',
     uri: 'https://graph.facebook.com/v2.6/'+ userId,
     qs: { 
-      // fields: "first_name,last_name,profile_pic,locale,timezone,gender",
       access_token: PAGE_ACCESS_TOKEN 
     },
     method: 'GET',
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
-      // var recipientId = body.recipient_id;
-      console.log("Successfully called User Profile API for recipient %s", userId);
-      console.log(response.body);
-      userProfile = response.body;
-    } else {
-      console.error("Failed calling User Profile API", response.statusCode, response.statusMessage, body.error);
-      err = body.error;
+      console.log("Successfully called User Profile API for recipient %s", userId);      
+      var info = JSON.parse(body)
+      console.log(info);
+      res.send(info);
     }
-  });
-  console.log(userProfile);
+  })
+  
   return userProfile;
 }
 
