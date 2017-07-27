@@ -342,7 +342,7 @@ function receivedMessage(event) {
         }
 
         if (messageText == "hey") {
-          message = "hey "+ callUserProfileAPI(senderID)["first_name"];
+          message = "hey "+ getUserInfo(senderID)["first_name"];
         }
         
         sendTextMessage(senderID, message);
@@ -363,6 +363,7 @@ function receivedMessage(event) {
 function getUserInfo(userId) {
   var info = callUserProfileAPI(userId);
   console.log(info);
+  return info;
 }
 
 
@@ -1091,6 +1092,7 @@ function callUserProfileAPI (userId) {
       err = body.error;
     }
   });
+  console.log(userProfile);
   return userProfile;
 }
 
