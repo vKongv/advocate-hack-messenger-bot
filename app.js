@@ -938,7 +938,6 @@ function getUserInfo(userId, field) {
                         type:"video",
                         payload:{
                             url:"https://www.facebook.com/nowhat.hk/videos/256977024819189/",
-                            title: "Russell Peter",
                         }
                     }
                 }
