@@ -1072,7 +1072,7 @@ function callSendAPI(messageData) {
  *
  */
 function callUserProfileAPI (userId) {
-  // var userProfile;
+  var userProfile;
   // var err;
   request({
     uri: 'https://graph.facebook.com/v2.6/'+ userId,
@@ -1083,12 +1083,13 @@ function callUserProfileAPI (userId) {
   }, function (error, response, body) {
     if (!error && response.statusCode == 200) {
       console.log("Successfully called User Profile API for recipient %s", userId);      
-      var info = JSON.parse(body);
-      console.log(info);
-      console.log(info["first_name"]);
-      return info;
+      userProfile = JSON.parse(body);
+      // console.log(info);
+      // console.log(info["first_name"]);
+      // return info;
     }
   })
+  console.log(userProfile);
   
   // return userProfile;
 }
