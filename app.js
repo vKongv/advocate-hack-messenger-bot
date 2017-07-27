@@ -32,7 +32,6 @@ app.use(express.static('public'));
 * set them using environment variables or modifying the config file in /config.
 *
 */
-var report = require('./db/report');
 // App Secret can be retrieved from the App Dashboard
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
 process.env.MESSENGER_APP_SECRET :
@@ -127,11 +126,6 @@ app.post('/webhook', function (req, res) {
 * (sendAccountLinking) is pointed to this URL. 
 * 
 */
-app.get('/:id/report', (function (req, res) {
-  var result  = report(req);
-  console.log("RESULT",result);
-  res.status(200).json({body: result.body});
-}));
 
 app.get('/authorize', function(req, res) {
     var accountLinkingToken = req.query.account_linking_token;
