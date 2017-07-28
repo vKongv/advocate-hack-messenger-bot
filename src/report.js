@@ -16,9 +16,9 @@ function getReport(id) {
   return connection.queryAsync('SELECT * FROM report WHERE id = ?', [id]);
 }
 
-function putReport(body) {
+function putReport(req) {
   try {
-    connection.queryAsync("INSERT INTO `advocate`.`report` (`content`) VALUES (?)", [body.content]);
+    connection.queryAsync("INSERT INTO `advocate`.`report` (`message`, `image`, `reporterId`) VALUES (?, ?, ?);", [req.body.message,req.body.image,req.params.id ]);
     return "Insert Successful";
   }
   catch (ex){
@@ -50,7 +50,7 @@ module.exports.get = function (req) {
 
 module.exports.put = function (req) {
   var results = async (function () {
-    return await ( putReport(req.body));
+    return await ( putReport(req));
   });
   var myResult = await(results()
     .then (function (result) {return result;})

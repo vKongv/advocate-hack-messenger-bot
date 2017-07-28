@@ -141,7 +141,7 @@ app.get('/:id/report', async (function (req, res) {
   res.status(result.status).json({body: result.body});
 }));
 
-app.put('/report', async (function (req, res) {
+app.put('/:id/report', async (function (req, res) {
   var result  = await(report.put(req));
   res.status(result.status).json({body: result.body});
 }));
