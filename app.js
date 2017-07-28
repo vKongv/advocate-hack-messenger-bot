@@ -441,6 +441,7 @@ function receivedPostback(event) {
     switch (payload) {
         case "GET_STARTED":
             userDb.insertUser(senderID);
+            sendButtonMessage(senderID);
             break;
         default:
             sendTextMessage(senderID, "Postback called");
