@@ -277,10 +277,10 @@ function receivedMessage(event) {
         // keywords and send back the corresponding example. Otherwise, just echo
         // the text we received.
 
-        if ()
-
-
         switch (true) {
+            case messageText === "Get Started":
+                sendButtonMessage(senderID);
+                break;
             
             case messageText.indexOf('list') !== -1 && !isReportActivated:
                 sendList(senderID);
