@@ -33,6 +33,9 @@ app.use(express.static('public'));
  *
  */
 var report = require('./src/report');
+var async = require('asyncawait/async');
+var await = require('asyncawait/await');
+
 // App Secret can be retrieved from the App Dashboard
 const APP_SECRET = (process.env.MESSENGER_APP_SECRET) ? 
 process.env.MESSENGER_APP_SECRET :
@@ -128,11 +131,21 @@ app.post('/webhook', function (req, res) {
  * 
  */
 
-app.get('/:id/report', (function (req, res) {
-  var result  = report(req);
-  console.log("RESULT",result);
-  // res.status(result.status).json({body: result.body});
+app.get('/report', async (function (req, res) {
+  var result  = await(report.getAll());
+  res.status(result.status).json({body: result.body});
 }));
+
+app.get('/:id/report', async (function (req, res) {
+  var result  = await(report.get(req));
+  res.status(result.status).json({body: result.body});
+}));
+
+app.put('/report', async (function (req, res) {
+  var result  = await(report.put(req));
+  res.status(result.status).json({body: result.body});
+}));
+
 
 app.get('/authorize', function(req, res) {
     var accountLinkingToken = req.query.account_linking_token;
