@@ -32,7 +32,7 @@ app.use(express.static('public'));
  * set them using environment variables or modifying the config file in /config.
  *
  */
-var report = require('./src/report');
+var report = require('./db/report');
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
 
