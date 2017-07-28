@@ -20,7 +20,10 @@ function getUser(id) {
     }
 }
 
-function insertUser(facebookId, role = ROLE_USER) {
+function insertUser(facebookId, role) {
+    if (role === undefined) {
+         role = ROLE_USER;
+    }
     try {
         connection.queryAsync( 
             "INSERT INTO `advocate`.`user` (`facebookId`, `role`) VALUES (?, ?);", 
