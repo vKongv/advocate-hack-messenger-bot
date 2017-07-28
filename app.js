@@ -282,63 +282,63 @@ function receivedMessage(event) {
                 sendButtonMessage(senderID);
                 break;
             
-            case messageText.indexOf('list') !== -1 && !isReportActivated:
+            case messageText.indexOf('list') !== -1:
                 sendList(senderID);
                 break;
             
-            case messageText.indexOf('image') !== -1 && !isReportActivated:
+            case messageText.indexOf('image') !== -1:
                 sendImageMessage(senderID);
                 break;
             
-            case messageText.indexOf('gif') !== -1 && !isReportActivated:
+            case messageText.indexOf('gif') !== -1:
                 sendGifMessage(senderID);
                 break;
             
-            case messageText.indexOf('audio') !== -1 && !isReportActivated:
+            case messageText.indexOf('audio') !== -1:
                 sendAudioMessage(senderID);
                 break;
             
-            case messageText.indexOf('video')!== -1 && !isReportActivated:
+            case messageText.indexOf('video')!== -1:
                 sendVideo(senderID);
                 break;
             
-            case messageText.indexOf('file')!== -1 && !isReportActivated:
+            case messageText.indexOf('file')!== -1:
                 sendFileMessage(senderID);
                 break;
             
-            case messageText.indexOf('menu') !== -1 && !isReportActivated:
+            case messageText.indexOf('menu') !== -1:
                 sendButtonMessage(senderID);
                 break;
             
-            case messageText.indexOf('generic') !== -1 && !isReportActivated:
+            case messageText.indexOf('generic') !== -1:
                 sendGenericMessage(senderID);
                 break;
             
-            case messageText.indexOf('more picture') !== -1 && !isReportActivated: 
+            case messageText.indexOf('more picture') !== -1: 
                 sendMultipleImages(senderID);
                 break;
             
-            case messageText.indexOf('receipt') !== -1 && !isReportActivated:
+            case messageText.indexOf('receipt') !== -1:
                 sendReceiptMessage(senderID);
                 break;
             
-            case messageText.indexOf('quick reply') !== -1 && !isReportActivated:
+            case messageText.indexOf('quick reply') !== -1:
                 sendQuickReply(senderID);
                 break;        
             
-            case messageText.indexOf('read receipt') !== -1 && !isReportActivated:
+            case messageText.indexOf('read receipt') !== -1:
                 sendReadReceipt(senderID);
                 break;        
             
-            case messageText.indexOf('typing on') !== -1 && !isReportActivated:
+            case messageText.indexOf('typing on') !== -1:
                 sendTypingOn(senderID);
                 break;        
             
-            case messageText.indexOf('typing off') !== -1 && !isReportActivated:
+            case messageText.indexOf('typing off') !== -1:
                 sendTypingOff(senderID);
                 break;        
             
-            case messageText.indexOf('account linking') !== -1 && !isReportActivated:
+            case messageText.indexOf('account linking') !== -1:
                 sendAccountLinking(senderID);
                 break;
             
@@ -347,10 +347,11 @@ function receivedMessage(event) {
                 forwardMessage(senderID, event.message);
                 break;
             
-            case isReportActivated:
-                console.log(event.message);
-                forwardMessage(senderID, event.message);
-                break;
+            //TODO: isReporting logic (message continuous)
+            // case isReportActivated:
+            //     console.log(event.message);
+            //     forwardMessage(senderID, event.message);
+            //     break;
             
             default:
                 const numberOfMeow = Math.floor(2 * Math.random()) + 1;
@@ -895,7 +896,10 @@ function sendAccountLinking(recipientId) {
 * Forward a message with Send API.
 *
 */
-function forwardMessage(recipientId, message) {
+function forwardMessage(recipientId, message) { 
+    return ;
+
+    //TODO: update isReport logic
     const moderatorId = 1779902678693258;
     
     var constructedMessage;
