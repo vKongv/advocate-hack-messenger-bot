@@ -421,12 +421,12 @@ var receivedMessage = async (function(event) {
             
             case 'post':
                 if (dbUser.role !== userDb.ROLE_MODERATOR) {
-                    break;
+                    showMenu(senderID);                    
                 } else {
                     postDb.insertPost(senderID);
-                    sendTextMessage("OK. You will need to first provide the title of the post.");
+                    sendTextMessage(senderID, "OK. You will need to first provide the title of the post.");
                 }
-            
+                break;            
             default:
                 showMenu(senderID);
                 break;
