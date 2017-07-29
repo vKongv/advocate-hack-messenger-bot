@@ -390,10 +390,10 @@ var receivedMessage = async (function(event) {
         }
     } else if (messageAttachments) {
         console.log(messageAttachments);
-        switch (messageAttachments.type) {
+        switch (messageAttachments[0].type) {
             case "image":
                 if (userStatus > 0) {
-                    messageDb.insertMessage(userStatus, messageAttachments, messageDb.TYPE_IMAGE);
+                    messageDb.insertMessage(userStatus, messageAttachments[0].payload.url, messageDb.TYPE_IMAGE);
                 }
                 break;
             default:
