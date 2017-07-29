@@ -3,6 +3,7 @@ var mysql = require('mysql');
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
 var Promise = require('bluebird');
+var user = require('./user');
 
 var connection =  Promise.promisifyAll(mysql.createConnection(dbconfig.connection));
 
@@ -19,19 +20,20 @@ function getPostDetails(postId) {
     return connection.queryAsync('SELECT * FROM post WHERE id = ?', [postId]);    
 }
 
-function insertPost(userId) {
+var insertPost = async (function (userId) {
     try {
-        connection.queryAsync( 
+        var postInserted = await(connection.queryAsync( 
             "INSERT INTO `advocate`.`post` (`userId`) VALUES (?);", 
             [userId]
-        );
+        ));
+        user.updateUserIsPosting(userId, postInserted);
         return "Insert Successful";
 
     } catch (ex){
         console.log(ex);
         throw ex;
     }
-}
+});
 
 function updatePostTitle (postId, title) {
     try {
