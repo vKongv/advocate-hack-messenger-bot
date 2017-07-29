@@ -261,6 +261,7 @@ function receivedMessage(event) {
     if (messageText) {
         //get user current status
         var userStatus = getUserCurrentState(senderID);
+        console.log(senderID);
         // If we receive a text message, check to see if it matches any special
         // keywords and send back the corresponding example. Otherwise, just echo
         // the text we received.
@@ -270,109 +271,121 @@ function receivedMessage(event) {
             switch(textChecker) {
                 case "end": 
                     userDb.updateUserState(senderID, 0);
+                    sendTextMessage(recipientId, "All information you reported had been noted down.");
                     break;
                 default:
+                    var msgReplied = [
+                        "",
+                        "Ok. I'm listening...",
+                        "Pen and paper are ready.",
+                        "I'm here to listen.",
+                        "Continue.",
+                    ];
                     messageDb.insertMessage(userStatus, text, messageDb.TYPE_TEXT);
+                    var min = Math.ceil(0);
+                    var max = Math.floor(msgReplied.length);
+                    const msgIndex = Math.floor(Math.random() * (max - min + 1)) + min;
+                    sendTextMessage(recipientId, msgReplied[msgIndex]);
                     break;
             };
-        }
+            
+        } else {
+            switch (textChecker) {
+                case 'list':
+                    sendList(senderID);
+                    break;
+                
+                case 'image':
+                    sendImageMessage(senderID);
+                    break;
+                
+                case 'gif':
+                    sendGifMessage(senderID);
+                    break;
+                
+                case 'audio':
+                    sendAudioMessage(senderID);
+                    break;
+                
+                case 'video':
+                    sendVideo(senderID);
+                    break;
+                
+                case 'file':
+                    sendFileMessage(senderID);
+                    break;
+                
+                case 'menu':
+                    showMenu(senderID);
+                    break;
+                
+                case 'generic':
+                    sendGenericMessage(senderID);
+                    break;
+                
+                case 'more picture': 
+                    sendMultipleImages(senderID);
+                    break;
 
-        switch (textChecker) {
-            case 'list':
-                sendList(senderID);
-                break;
-            
-            case 'image':
-                sendImageMessage(senderID);
-                break;
-            
-            case 'gif':
-                sendGifMessage(senderID);
-                break;
-            
-            case 'audio':
-                sendAudioMessage(senderID);
-                break;
-            
-            case 'video':
-                sendVideo(senderID);
-                break;
-            
-            case 'file':
-                sendFileMessage(senderID);
-                break;
-            
-            case 'menu':
-                showMenu(senderID);
-                break;
-            
-            case 'generic':
-                sendGenericMessage(senderID);
-                break;
-            
-            case 'more picture': 
-                sendMultipleImages(senderID);
-                break;
+                case 'event':
+                    sendTextMessage(senderID, "https://www.facebook.com/events/419524075069645/");
+                    break;
+                
+                case 'receipt':
+                    sendReceiptMessage(senderID);
+                    break;
+                
+                case 'quick reply':
+                    sendQuickReply(senderID);
+                    break;        
+                
+                case 'read receipt':
+                    sendReadReceipt(senderID);
+                    break;        
+                
+                case 'typing on':
+                    sendTypingOn(senderID);
+                    break;        
+                
+                case 'typing off':
+                    sendTypingOff(senderID);
+                    break;        
+                
+                case 'account linking':
+                    sendAccountLinking(senderID);
+                    break;
+                
+                case 'report':
+                    console.log(event.message);
+                    forwardMessage(senderID, event.message);
+                    break;
+                
+                case 'show':
+                    sendLatestPost(senderID);
+                    break;
 
-            case 'event':
-                sendTextMessage(senderID, "https://www.facebook.com/events/419524075069645/");
-                break;
-            
-            case 'receipt':
-                sendReceiptMessage(senderID);
-                break;
-            
-            case 'quick reply':
-                sendQuickReply(senderID);
-                break;        
-            
-            case 'read receipt':
-                sendReadReceipt(senderID);
-                break;        
-            
-            case 'typing on':
-                sendTypingOn(senderID);
-                break;        
-            
-            case 'typing off':
-                sendTypingOff(senderID);
-                break;        
-            
-            case 'account linking':
-                sendAccountLinking(senderID);
-                break;
-            
-            case 'report':
-                console.log(event.message);
-                forwardMessage(senderID, event.message);
-                break;
-            
-            case 'show':
-                sendLatestPost(senderID);
-                break;
-
-            case 'show report':
-                sendLatesReport(senderID);
-                break;
-            
-            case 'hey':
-                getUserInfo(senderID).then(
-                    function (response) {
-                        sendTextMessage(senderID, "hey " + response["first_name"]);
+                case 'show report':
+                    sendLatesReport(senderID);
+                    break;
+                
+                case 'hey':
+                    getUserInfo(senderID).then(
+                        function (response) {
+                            sendTextMessage(senderID, "hey " + response["first_name"]);
+                        }
+                    );
+                    break;
+                
+                default:
+                    const numberOfMeow = Math.floor(2 * Math.random()) + 1;
+                    let message = '';
+                    for (let i = 0; i < numberOfMeow; i++) {
+                        message += 'Meow' + ' ';
                     }
-                );
-                break;
-            
-            default:
-                const numberOfMeow = Math.floor(2 * Math.random()) + 1;
-                let message = '';
-                for (let i = 0; i < numberOfMeow; i++) {
-                    message += 'Meow' + ' ';
-                }
-                sendTextMessage(senderID, message);
-                break;
+                    sendTextMessage(senderID, message);
+                    break;
+            }
         }
-        
     } else if (messageAttachments) {
         switch (messageAttachments.type) {
             case "image":
@@ -591,7 +604,6 @@ var createNewReport = async (function (reporterId, payload) {
 
 var getUserCurrentState = async (function (reporterId) {
     var user = await(userDb.getUser(reporterId));
-    console.log(reporterId);
     console.log(user);
     return user[0].isReporting;
 });
