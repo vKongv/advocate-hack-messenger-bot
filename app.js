@@ -347,6 +347,10 @@ function receivedMessage(event) {
                 forwardMessage(senderID, event.message);
                 break;
             
+            case messageText === 'show':
+                sendLatestPost(senderID);
+                break;
+            
             //TODO: isReporting logic (message continuous)
             // case isReportActivated:
             //     console.log(event.message);
@@ -486,6 +490,39 @@ function receivedAccountLink(event) {
 
     console.log("Received account link event with for user %d with status %s " +
     "and auth code %s ", senderID, status, authCode);
+}
+
+function sendLatestPost(recipientId) {
+    var events = [{
+        title: "rift",
+        subtitle: "Next-generation virtual reality",
+        item_url: "https://www.oculus.com/en-us/rift/",               
+        image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQBta-66htflwi-K&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12602069_1350608345000055_9152154959326740480_n.jpg%3Foh%3D94a78537864e25e5b0c0067dfe89bc4a%26oe%3D59B5B9E8&_nc_hash=AQDXEZQ5Q2GI33IR",
+        buttons: [{
+            type: "web_url",
+            url: "https://www.oculus.com/en-us/rift/",
+            title: "Open Web URL"
+        }, {
+            type: "postback",
+            title: "Call Postback",
+            payload: "Payload for first bubble",
+        }],
+    }, {
+        title: "touch",
+        subtitle: "Your Hands, Now in VR",
+        item_url: "https://www.oculus.com/en-us/touch/",               
+        image_url: "https://scontent.oculuscdn.com/t64.5771-25/12139289_377088419322281_3571472392767143936_n.png/hand-controller.png",
+        buttons: [{
+            type: "web_url",
+            url: "https://www.oculus.com/en-us/touch/",
+            title: "Open Web URL"
+        }, {
+            type: "postback",
+            title: "Call Postback",
+            payload: "Payload for second bubble",
+        }]
+    }];
+    sendGenericMessage(recipientId, events);
 }
 
 /*
@@ -667,7 +704,7 @@ function sendButtonMessage(recipientId) {
 * Send a Structured Message (Generic Message type) using the Send API.
 *
 */
-function sendGenericMessage(recipientId) {
+function sendGenericMessage(recipientId, cards) {
     var messageData = {
         recipient: {
             id: recipientId
@@ -677,35 +714,7 @@ function sendGenericMessage(recipientId) {
                 type: "template",
                 payload: {
                     template_type: "generic",
-                    elements: [{
-                        title: "rift",
-                        subtitle: "Next-generation virtual reality",
-                        item_url: "https://www.oculus.com/en-us/rift/",               
-                        image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQBta-66htflwi-K&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12602069_1350608345000055_9152154959326740480_n.jpg%3Foh%3D94a78537864e25e5b0c0067dfe89bc4a%26oe%3D59B5B9E8&_nc_hash=AQDXEZQ5Q2GI33IR",
-                        buttons: [{
-                            type: "web_url",
-                            url: "https://www.oculus.com/en-us/rift/",
-                            title: "Open Web URL"
-                        }, {
-                            type: "postback",
-                            title: "Call Postback",
-                            payload: "Payload for first bubble",
-                        }],
-                    }, {
-                        title: "touch",
-                        subtitle: "Your Hands, Now in VR",
-                        item_url: "https://www.oculus.com/en-us/touch/",               
-                        image_url: "https://scontent.oculuscdn.com/t64.5771-25/12139289_377088419322281_3571472392767143936_n.png/hand-controller.png",
-                        buttons: [{
-                            type: "web_url",
-                            url: "https://www.oculus.com/en-us/touch/",
-                            title: "Open Web URL"
-                        }, {
-                            type: "postback",
-                            title: "Call Postback",
-                            payload: "Payload for second bubble",
-                        }]
-                    }]
+                    elements: cards
                 }
             }
         }
