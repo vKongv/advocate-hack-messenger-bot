@@ -387,7 +387,7 @@ function receivedMessage(event) {
 
         //"Message with attachment received"
                 sendTextMessage(senderID, event.message);
-                break;
+                // break;
         // }
     }
 }
