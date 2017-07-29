@@ -243,9 +243,6 @@ function receivedMessage(event) {
     var messageText = message.text;
     var messageAttachments = message.attachments;
     var quickReply = message.quick_reply;
-
-    //get user current status
-    var userStatus = getUserCurrentState(senderID);
     
     if (isEcho) {
         // Just logging message echoes to console
@@ -262,6 +259,8 @@ function receivedMessage(event) {
     }
     
     if (messageText) {
+        //get user current status
+        var userStatus = getUserCurrentState(senderID);
         // If we receive a text message, check to see if it matches any special
         // keywords and send back the corresponding example. Otherwise, just echo
         // the text we received.
