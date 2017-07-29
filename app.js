@@ -456,7 +456,7 @@ function receivedPostback(event) {
             showMenu(senderID);
             break;
         case "LATEST_NEWS_EVENT":
-            sendGenericMessage(senderID);
+            sendLatestPost(senderID);
         break;
         default:
             sendTextMessage(senderID, "Postback called");
