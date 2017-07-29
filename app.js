@@ -717,8 +717,8 @@ function showMenu(recipientId) {
                         },
                         {
                             type: "postback",
-                            title: "Report",
-                            payload: "REPORT",
+                            title: "...",
+                            payload: "MORE_CATEGORY",
                         },
                         {
                             type: "postback",
@@ -730,6 +730,62 @@ function showMenu(recipientId) {
                             title: "Report",
                             payload: "REPORT",
                         }
+                    ],
+                }
+            }
+        }
+    };  
+    
+    callSendAPI(messageData);
+}
+/*
+* Send categories of report action user can perform.
+*/
+function showReportCategory(recipientId, more) {
+    var options = [
+        {
+            type: "postback",
+            title: "Sex Trafficking",
+            payload: "SEX",
+        },
+        {
+            type: "postback",
+            title: "Domestic Trafficking",
+            payload: "DOMESTIC",
+        },
+        {
+            type: "postback",
+            title: "...",
+            payload: "MORE_CATEGORY",
+        },
+        {
+            type: "postback",
+            title: "Construction Trafficking",
+            payload: "REPORT",
+        },
+        {
+            type: "postback",
+            title: "Report",
+            payload: "REPORT",
+        }
+    ];
+    var messageData = {
+        recipient: {
+            id: recipientId
+        },
+        message: {
+            attachment: {
+                type: "template",
+                payload: {
+                    template_type: "button",
+                    text: "",
+                    buttons:[
+                        {
+                            type: "postback",
+                            title: "Latest News / Events",
+                            payload: "LATEST_NEWS_EVENT",
+                        }, 
+                        
                     ],
                 }
             }
@@ -1135,13 +1191,11 @@ function sendList (recipientID) {
                             title: "Classic T-Shirt Collection",
                             image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQA19xWlLrM2KJCK&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12533901_1815209992135564_2169362344549810176_n.jpg%3Foh%3Da41e288e5837475c8a5ee569d96b988d%26oe%3D59A15CCF&_nc_hash=AQBW1C_F4-NOsjtC",
                             subtitle: "See all our colors",
-                            // default_action: {
-                                //     type: "web_url",
-                                //     url: "https://www.oculus.com/experiences/rift/866068943510454/",
-                                //     messenger_extensions: false,
-                                //     webview_height_ratio: "tall",
-                                //     fallback_url: "https://www.oculus.com"
-                                // },
+                            default_action: {
+                                type: "postback",
+                                title: "Latest News / Events",
+                                payload: "LATEST_NEWS_EVENT",
+                            },
                         },
                         {
                             title: "Classic White T-Shirt",
