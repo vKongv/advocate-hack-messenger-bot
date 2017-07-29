@@ -223,7 +223,7 @@ function receivedAuthentication(event) {
 * then we'll simply confirm that we've received the attachment.
 * 
 */
-function receivedMessage(event) {
+var receivedMessage = async (function(event) {
     var senderID = event.sender.id;
     var recipientID = event.recipient.id;
     var timeOfMessage = event.timestamp;
@@ -257,10 +257,11 @@ function receivedMessage(event) {
         sendTextMessage(senderID, "Quick reply tapped");
         return;
     }
+
+    var userStatus = await(getUserCurrentState(senderID));
     
     if (messageText) {
         //get user current status
-        var userStatus = getUserCurrentState(senderID);
         console.log(senderID);
         console.log(userStatus);
         // If we receive a text message, check to see if it matches any special
@@ -399,7 +400,9 @@ function receivedMessage(event) {
                 sendTextMessage(senderID, msg);
         }
     }
-}
+
+    return ;
+});
 
 function getUserInfo(userId, field) {
     return callUserProfileAPI(userId).then(
