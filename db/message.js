@@ -10,7 +10,7 @@ var TYPE_TEXT = 'TEXT';
 var TYPE_IMAGE = 'IMAGE';
 
 function getLatestUserReportMessage (reporterId) {
-    return connection.queryAsync('SELECT message.* FROM message INNER JOIN report ON message.reportId = report.id AND message.reportId = (SELECT id FROM report WHERE reporterId = ? ORDER BY id DESC LIMIT 1)',
+    return connection.queryAsync('SELECT message.*, report.type AS reportType FROM message INNER JOIN report ON message.reportId = report.id AND message.reportId = (SELECT id FROM report WHERE reporterId = ? ORDER BY id DESC LIMIT 1)',
         [reporterId]);
 }
 

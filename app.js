@@ -598,7 +598,7 @@ function receivedAccountLink(event) {
 
 function formatReportMessages (messages) {
     var images = [];
-    var formattedMessage = 'There is a new report #' + messages[0].reportId + '. Please review and reply POST [post link] to accept this report: \n\n';
+    var formattedMessage = 'There is a new ' + messages[0].reportType.toLowerCase() + ' #' + messages[0].reportId + '. Please review and reply POST [post link] to accept this report: \n\n';
     var splittedMessages = [];
     messages.forEach(function (message) {
         if (message.type === messageDb.TYPE_IMAGE) {
