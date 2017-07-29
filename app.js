@@ -508,8 +508,6 @@ function formatReportMessages (messages) {
     var formattedMessage = '';
     var splittedMessages = [];
     messages.forEach(function (message) {
-        console.log(message.type);
-        console.log(message);
         if (message.type === messageDb.TYPE_IMAGE) {
             images.push(message.text);
         } else {
@@ -531,6 +529,7 @@ var getLatestReport = async(function (senderId) {
             sendTextMessage(senderId, message);
         });
         if (newMessages.images.length > 0) {
+            var images = newMessages.images;
             for(var i  = 0; i < newMessages.images.length; i++) {
                 images[i] = mapReportImageToGenericTemplate(images[i]);
             }
@@ -546,7 +545,7 @@ function mapReportImageToGenericTemplate(image) {
     var template = {
         title: 'Report Image',
         item_url: image,               
-        image_url: iamge,
+        image_url: image,
     };
     return template;
 }
