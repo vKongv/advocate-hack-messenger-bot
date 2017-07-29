@@ -592,6 +592,7 @@ var createNewReport = async (function (reporterId, payload) {
 
 var getUserCurrentState = async (function (reporterId) {
     var user = await(userDb.getUser(reporterId));
+    console.log(reporterId);
     console.log(user);
     return user[0].isReporting;
 });
