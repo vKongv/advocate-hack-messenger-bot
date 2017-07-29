@@ -275,7 +275,6 @@ var receivedMessage = async (function(event) {
                     break;
                 default:
                     var msgReplied = [
-                        "",
                         "Ok. I'm listening...",
                         "Pen and paper are ready.",
                         "I'm here to listen.",
@@ -601,6 +600,7 @@ var sendLatestPost = async (function(recipientId) {
 var createNewReport = async (function (reporterId, payload) {
     const msg = "Thank you for reporting a case on "+ payload +" Trafficking. " + REPORT_RESPONSE_MESSAGE;
     sendTextMessage(reporterId, msg);
+    sendTextMessage(reporterId, "To end reporting, type \"END\"");
     var report = await(reportDb.insertReport(reporterId, payload));
     userDb.updateUserState(reporterId, report.insertId);
 });
