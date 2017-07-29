@@ -513,7 +513,7 @@ var sendLatestPost = async (function(recipientId) {
     var posts = await(postDb.getLatestPost());
     if (posts.length > 0) {
         for (var i = 0; i < posts.length; i++) {
-            posts[i] = mapPostToGenericTemplate(post[i]);
+            posts[i] = mapPostToGenericTemplate(posts[i]);
         };
         return sendGenericMessage(recipientId, posts);    
     } else {
