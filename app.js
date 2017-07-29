@@ -531,6 +531,7 @@ var getLatestReport = async(function (senderId) {
             sendTextMessage(senderId, message);
         });
         if (newMessages.images.length > 0) {
+            var images = newMessages.images;
             for(var i  = 0; i < newMessages.images.length; i++) {
                 images[i] = mapReportImageToGenericTemplate(images[i]);
             }
