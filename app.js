@@ -378,15 +378,17 @@ function receivedMessage(event) {
         }
         
     } else if (messageAttachments) {
-        switch(true) {
-            case isReportActivated:
-                console.log(event.message);
-                forwardMessage(senderID, event.message);
+        // switch(true) {
+        //     case isReportActivated:
+        //         console.log(event.message);
+        //         forwardMessage(senderID, event.message);
+        //         break;
+        //     default:
+
+        //"Message with attachment received"
+                sendTextMessage(senderID, event.message);
                 break;
-            default:
-                sendTextMessage(senderID, "Message with attachment received");
-                break;
-        }
+        // }
     }
 }
 
