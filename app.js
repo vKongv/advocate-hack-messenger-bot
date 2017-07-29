@@ -321,9 +321,11 @@ var receivedMessage = async (function(event) {
                         } else {
                             postDb.updatePostImage(post.id, messageText);                       
                         }
-                        sendTextMessage(senderID, "Thank you. Your post is being recorded and broadcasted");
-                        userDb.updateUserIsPosting(senderID, 0); // reset isPosting state                                         
+                        sendTextMessage(senderID, "Thank you. Your post is being recorded and broadcasted. Do you want to broadcast it now? (YES or LATER)");
                     } else {
+                        if (textChecker === 'yes') {
+                            broadcastToAllUser();
+                        }
                         userDb.updateUserIsPosting(senderID, 0); // reset isPosting state                        
                     }
                 } else {
@@ -482,6 +484,13 @@ function receivedDeliveryConfirmation(event) {
 
     console.log("All message before %d were delivered.", watermark);
 }
+
+var broadcastToAllUser = async(function () {
+    var users = await(user.getAllNormalUser);
+    users.forEach(function (user) {
+        sendLatestPost(user.facebookId);
+    });
+});
 
 
 /*

@@ -20,6 +20,10 @@ function getUser(id) {
     }
 }
 
+function getAllNormalUser() {
+    return connection.queryAsync('SELECT * FROM user WHERE role = ?', [ROLE_USER]);    
+}
+
 function insertUser(facebookId, role) {
     if (role === undefined) {
          role = ROLE_USER;
@@ -74,6 +78,7 @@ module.exports.ROLE_MODERATOR = ROLE_MODERATOR;
 module.exports.ROLE_NGO = ROLE_NGO;
 module.exports.insertUser = insertUser;
 module.exports.getUser = getUser;
+module.exports.getAllNormalUser = getAllNormalUser;
 module.exports.updateUserState = updateUserState;
 module.exports.updateUserIsPosting = updateUserIsPosting;
 module.exports.getModeratorUsers = getModeratorUsers;
