@@ -318,6 +318,10 @@ function receivedMessage(event) {
             case messageText.indexOf('more picture') !== -1: 
                 sendMultipleImages(senderID);
                 break;
+
+            case messageText.indexOf('event') !== -1:
+                sendEvent(senderID);
+                break;
             
             case messageText.indexOf('receipt') !== -1:
                 sendReceiptMessage(senderID);
@@ -1065,6 +1069,30 @@ function sendMultipleImages(recipientId) {
         };  
                     
     callSendAPI(messageData);
+}
+
+function sendEvent (recipientID) {
+    const messageData = {
+        recipient: {
+            id: recipientID,
+        },
+        message: {
+            attachment: {
+                type: "template",
+                payload: {
+                    template_type: "generic",
+                    elements: [{
+                        title: "Event Test",
+                        image_url: "https://scontent.fkul6-1.fna.fbcdn.net/v/t31.0-0/c0.17.959.505/p180x540/19400532_10154886034231443_1749597473098793906_o.jpg?_nc_eui2=v1%3AAeH8fwEH3we4dA1l7RgTU4cBdhgJTd_fU-ESbMGk-LUIo2qSDrGrKfOG5fnQtf4gN_S-r_MTaAqBCO-hLmRcKQxgLV882P8jKvtS1pYGmt3Jyg&amp;oh=39eae045bcf171d320e6d4ce092ec502&amp;oe=59FB9BD6",
+                        item_url: "https://www.facebook.com/events/419524075069645/%3Facontext=%257B%2522ref%2522%253A%25223%2522%252C%2522ref_newsfeed_story_type%2522%253A%2522regular%2522%252C%2522action_history%2522%253A%2522null%2522%257D",
+                        subtitle: "Event testing",
+                    },],
+                }
+            }
+        }
+    };
+    callSendAPI(messageData);
+    
 }
                 
 function sendList (recipientID) {
