@@ -280,7 +280,7 @@ function receivedMessage(event) {
 
         switch (true) {
             case messageText === "Get Started":
-                sendButtonMessage(senderID);
+                showMenu(senderID);
                 break;
             
             case messageText.indexOf('list') !== -1:
@@ -308,7 +308,7 @@ function receivedMessage(event) {
                 break;
             
             case messageText.indexOf('menu') !== -1:
-                sendButtonMessage(senderID);
+                showMenu(senderID);
                 break;
             
             case messageText.indexOf('generic') !== -1:
@@ -453,8 +453,11 @@ function receivedPostback(event) {
     switch (payload) {
         case "GET_STARTED":
             userDb.insertUser(senderID);
-            sendButtonMessage(senderID);
+            showMenu(senderID);
             break;
+        case "LATEST_NEWS_EVENT":
+            sendGenericMessage(senderID);
+        break;
         default:
             sendTextMessage(senderID, "Postback called");
             break;
@@ -689,7 +692,7 @@ function sendTextMessage(recipientId, messageText) {
 * Send a button message using the Send API.
 *
 */
-function sendButtonMessage(recipientId) {
+function showMenu(recipientId) {
     var messageData = {
         recipient: {
             id: recipientId
@@ -701,14 +704,14 @@ function sendButtonMessage(recipientId) {
                     template_type: "button",
                     text: "What can I do for you?",
                     buttons:[{
-                        type: "web_url",
-                        url: "https://www.oculus.com/en-us/rift/",
-                        title: "What's new?"
+                        type: "postback",
+                        title: "Latest News/Events",
+                        payload: "LATEST_NEWS_EVENT",
                     }, 
                     {
                         type: "postback",
                         title: "Report!",
-                        payload: "Report!",
+                        payload: "REPORT",
                     }, 
                     // {
                         //   type: "phone_number",
