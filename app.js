@@ -315,7 +315,7 @@ var receivedMessage = async (function(event) {
                             postDb.updatePostDescription(post.id, messageText);                            
                         }
                         sendTextMessage(senderID, "Latly, to improve engagement, please include ONE cover image for the post. (Type SKIP to skip this step)");                        
-                    } else if (!post.image) {
+                    } else if (!post.imageUrl) {
                         if (textChecker === 'skip') {
                             postDb.updatePostImage(post.id, DEFAULT_POST_IMAGE);
                         } else {
