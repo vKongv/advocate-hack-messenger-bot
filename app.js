@@ -511,7 +511,7 @@ function receivedAccountLink(event) {
 
 function formatReportMessages (messages) {
     var images = [];
-    var formattedMessage = '';
+    var formattedMessage = 'There is a new report #' + messages[0].reportId + '. Please review and reply POST [post link] to accept this report: \n\n';
     var splittedMessages = [];
     messages.forEach(function (message) {
         if (message.type === messageDb.TYPE_IMAGE) {
@@ -533,7 +533,6 @@ var sendLatesReport = async(function (senderId) {
     if (moderators.length > 0 && messages.length > 0) {
         var newMessages = formatReportMessages(messages);
         var moderatorId = moderators[0].facebookId;
-        sendTextMessage(moderatorId, "There is a new report coming in...");        
         newMessages.splittedMessages.forEach(function (message) {
             sendTextMessage(moderatorId, message);
         });
