@@ -523,10 +523,10 @@ function receivedAccountLink(event) {
 
 function formatReportMessages (messages) {
     var images = [];
-    var formattedMessage = '>> ';
+    var formattedMessage = '';
     var splittedMessages = [];
     messages.forEach(function (message) {
-        formattedMessage += '>> ' + formattedMessage + message.text + '\n';
+        formattedMessage += '>> ' + message.text + '\n\n';
     });
     for(var i = 0; i < formattedMessage.length; i+=639) {
         splittedMessages.push(formattedMessage.substr(i, 639));
