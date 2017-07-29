@@ -353,7 +353,7 @@ function receivedMessage(event) {
                 break;
 
             case 'show report':
-                getLatestReport(senderID);
+                sendLatesReport(senderID);
                 break;
             
             case 'hey':
@@ -516,6 +516,7 @@ function formatReportMessages (messages) {
     messages.forEach(function (message) {
         if (message.type === messageDb.TYPE_IMAGE) {
             images.push(message.text);
+            formattedMessage += '>> [image-' + images.length.toString() + ']\n\n';            
         } else {
             formattedMessage += '>> ' + message.text + '\n\n';
         }
@@ -526,31 +527,33 @@ function formatReportMessages (messages) {
     return {splittedMessages, images};
 }
 
-var getLatestReport = async(function (senderId) {
+var sendLatesReport = async(function (senderId) {
     var messages = await(messageDb.getLatestUserReportMessage(senderId));
-    if (messages.length > 0) {
+    var moderators = await(userDb.getModeratorUsers());
+    if (moderators.length > 0 && messages.length > 0) {
         var newMessages = formatReportMessages(messages);
-        sendTextMessage(senderId, 'Your latest report message:');      
+        var moderatorId = moderators[0].facebookId;
+        sendTextMessage(moderatorId, "There is a new report coming in...");        
         newMessages.splittedMessages.forEach(function (message) {
-            sendTextMessage(senderId, message);
+            sendTextMessage(moderatorId, message);
         });
         if (newMessages.images.length > 0) {
             var images = newMessages.images;
             for(var i  = 0; i < newMessages.images.length; i++) {
                 images[i] = mapReportImageToGenericTemplate(images[i]);
             }
-            sendGenericMessage(senderId, images);  
+            sendGenericMessage(moderatorId, images);  
         }
-        return ;
     } else {
-        return sendTextMessage(senderId, 'No report found for your account');
+        console.warn('No moderator found or report is empty');
     }
+    
 });
 
 function mapReportImageToGenericTemplate(image) {
     var template = {
         title: 'Report Image',
-        item_url: image,               
+        item_url: image,              
         image_url: image,
     };
     return template;
