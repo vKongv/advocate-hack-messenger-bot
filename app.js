@@ -486,7 +486,7 @@ function receivedDeliveryConfirmation(event) {
 }
 
 var broadcastToAllUser = async(function () {
-    var users = await(user.getAllNormalUser);
+    var users = await(user.getAllNormalUser());
     users.forEach(function (user) {
         sendLatestPost(user.facebookId);
     });
