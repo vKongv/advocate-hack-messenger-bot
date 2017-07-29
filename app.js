@@ -317,6 +317,10 @@ function receivedMessage(event) {
             case messageText.indexOf('more picture') !== -1: 
                 sendMultipleImages(senderID);
                 break;
+
+            case messageText.indexOf('event') !== -1:
+                sendEvent(senderID);
+                break;
             
             case messageText.indexOf('receipt') !== -1:
                 sendReceiptMessage(senderID);
@@ -1043,6 +1047,28 @@ function sendMultipleImages(recipientId) {
         };  
                     
     callSendAPI(messageData);
+}
+
+function sendEvent (recipientID) {
+    const messageData = {
+        recipient: {
+            id: recipientID,
+        },
+        message: {
+            type: "template",
+            payload: {
+                template_type: "generic",
+                elements: [
+                    {
+                        title: "Test Event",
+                        item_url: "https://www.facebook.com/events/464835850549205/?acontext=%7B%22ref%22%3A%222%22%2C%22ref_dashboard_filter%22%3A%22upcoming%22%2C%22action_history%22%3A%22[%7B%5C%22surface%5C%22%3A%5C%22dashboard%5C%22%2C%5C%22mechanism%5C%22%3A%5C%22main_list%5C%22%2C%5C%22extra_data%5C%22%3A[]%7D]%22%7D",
+                        subtitle: "Event testing",
+                    },]
+            }
+        }
+    };
+    callSendAPI(messageData);
+    
 }
                 
 function sendList (recipientID) {
