@@ -524,17 +524,25 @@ function receivedAccountLink(event) {
 function formatReportMessages (messages) {
     var images = [];
     var formattedMessage = '>> ';
+    var splittedMessages = [];
     messages.forEach(function (message) {
         formattedMessage += '>> ' + formattedMessage + message.text + '\n';
-    })
-    return {formattedMessage, images};
+    });
+    for(var i = 0; i < formattedMessage.length; i+=639) {
+        splittedMessages.push(formattedMessage.substr(i, 639));
+    };
+    return {splittedMessages, images};
 }
 
 var getLatestReport = async(function (senderId) {
     var messages = await(messageDb.getLatestUserReportMessage(senderId));
     if (messages.length > 0) {
         var newMessages = formatReportMessages(messages);
-        return sendTextMessage(senderId, newMessages.formattedMessage);
+        sendTextMessage(senderId, 'Your latest report message:');        
+        newMessages.splittedMessages.forEach(function (message) {
+            sendTextMessage(senderId, message);
+        });
+        return ;
     } else {
         return sendTextMessage(senderId, 'No report found for your account');
     }
