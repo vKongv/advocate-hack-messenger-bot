@@ -97,9 +97,6 @@ app.post('/webhook', async (function (req, res) {
             
             // Iterate over each messaging event
             pageEntry.messaging.forEach(function(messagingEvent) {
-                var senderId = messagingEvent.sender.id;
-                var user = await(userDb.getUser(senderId));
-                sendTextMessage(senderId, 'Your user details: ' + JSON.stringify(user));
                 if (messagingEvent.optin) {
                     receivedAuthentication(messagingEvent);
                 } else if (messagingEvent.message) {
