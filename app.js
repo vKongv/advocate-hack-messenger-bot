@@ -23,6 +23,7 @@ const
     reportDb = require('./db/report.js');
 
 const REPORT_RESPONSE_MESSAGE = "\n\nCan you please provide us the following details: \n - Time \n - Date of incident \n - Location \n - Description of event. \n\nAlso, Upload as many pictures as necessary. \n\nDo provide us your mobile number in case we need to contact you for further details.  \n\n** Disclaimer: \nPlease be assured that the information you provide will not be published publicly but will be handled only by relevant authorities.";
+const DEFAULT_POST_IMAGE = "http://copyrightuser.org/wp-content/uploads/2013/04/newsreporting.jpg";
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -257,8 +258,16 @@ var receivedMessage = async (function(event) {
         sendTextMessage(senderID, "Quick reply tapped");
         return;
     }
-    //get user current status
-    var userStatus = await(getUserCurrentState(senderID));
+
+    //Get user details from db
+    var dbUsers = await(userDb.getUser(senderID));
+    var dbUser = {};
+    if (dbUsers.length > 0) {
+        dbUser = dbUsers[0];
+    } else {
+        await(userDb.insertUser(senderId));
+        dbUser = await(userDb.getUser(senderID))[0];
+    }
     
     if (messageText) {
         // If we receive a text message, check to see if it matches any special
@@ -266,7 +275,7 @@ var receivedMessage = async (function(event) {
         // the text we received.
         var textChecker = messageText.toLowerCase();
 
-        if (userStatus > 0) {
+        if (Object.keys(dbUser).length > 0 && dbUser.isReporting) {
             switch(textChecker) {
                 case "end": 
                     userDb.updateUserState(senderID, 0);
@@ -280,118 +289,161 @@ var receivedMessage = async (function(event) {
                         "I'm here to listen.",
                         "Continue.",
                     ];
-                    messageDb.insertMessage(userStatus, textChecker, messageDb.TYPE_TEXT);
+                    messageDb.insertMessage(dbUser.isReporting, messageText, messageDb.TYPE_TEXT);
                     var min = Math.ceil(0);
                     var max = Math.floor(msgReplied.length);
                     const msgIndex = Math.floor(Math.random() * (max - min + 1)) + min;
                     sendTextMessage(senderID, msgReplied[msgIndex]);
                     break;
             };
-            
-        } else {
-            switch (textChecker) {
-                case 'list':
-                    sendList(senderID);
-                    break;
-                
-                case 'image':
-                    sendImageMessage(senderID);
-                    break;
-                
-                case 'gif':
-                    sendGifMessage(senderID);
-                    break;
-                
-                case 'audio':
-                    sendAudioMessage(senderID);
-                    break;
-                
-                case 'video':
-                    sendVideo(senderID);
-                    break;
-                
-                case 'file':
-                    sendFileMessage(senderID);
-                    break;
-                
-                case 'menu':
-                    showMenu(senderID, "What can I do for you ?");
-                    break;
-                
-                case 'generic':
-                    sendGenericMessage(senderID);
-                    break;
-                
-                case 'more picture': 
-                    sendMultipleImages(senderID);
-                    break;
-
-                case 'event':
-                    sendTextMessage(senderID, "https://www.facebook.com/events/419524075069645/");
-                    break;
-                
-                case 'receipt':
-                    sendReceiptMessage(senderID);
-                    break;
-                
-                case 'quick reply':
-                    sendQuickReply(senderID);
-                    break;        
-                
-                case 'read receipt':
-                    sendReadReceipt(senderID);
-                    break;        
-                
-                case 'typing on':
-                    sendTypingOn(senderID);
-                    break;        
-                
-                case 'typing off':
-                    sendTypingOff(senderID);
-                    break;        
-                
-                case 'account linking':
-                    sendAccountLinking(senderID);
-                    break;
-                
-                case 'report':
-                    console.log(event.message);
-                    forwardMessage(senderID, event.message);
-                    break;
-                
-                case 'show':
-                    sendLatestPost(senderID);
-                    break;
-
-                case 'show report':
-                    sendLatestReport(senderID);
-                    break;
-                
-                case 'hey':
-                    getUserInfo(senderID).then(
-                        function (response) {
-                            sendTextMessage(senderID, "Hey " + response["first_name"]);
+            return;
+        } else if (dbUser.role === userDb.ROLE_MODERATOR ) {
+            if (dbUser.isPosting) {
+                var postsDetails = postDb.getPostDetails(dbUser.isPosting);
+                if (postDetails.length > 0) {
+                    var post = postDetails[0];
+                    if (!post.title) {
+                        postDb.updatePostTitle(post.id, messageText);
+                        sendTextMessage(senderID, "Please provide link of the post as well");
+                    } else if (!post.link) {
+                        postDb.updatePostLink(post.id, messageText);
+                        sendTextMessage(senderID, "Include some description as well. (Type SKIP to skip this step)");                        
+                    } else if (!post.description) {
+                        if (textChecker === 'skip') {
+                            postDb.updatePostDescription(post.id, "No description");                            
+                        } else {
+                            postDb.updatePostDescription(post.id, messageText);                            
                         }
-                    );
-                    break;
-                
-                default:
-                    showMenu(reporterId, "Let me guide you on this.");
-                    break;
+                        sendTextMessage(senderID, "Latly, to improve engagement, please include ONE cover image for the post. (Type SKIP to skip this step)");                        
+                    } else if (!post.image) {
+                        if (textChecker === 'skip') {
+                            postDb.updatePostImage(post.id, DEFAULT_POST_IMAGE);
+                        } else {
+                            postDb.updatePostImage(post.id, messageText);                       
+                        }
+                        sendTextMessage(senderID, "Thank you. Your post is being recorded and broadcasted");
+                        userDb.updateUserIsPosting(senderID, 0); // reset isPosting state                                         
+                    } else {
+                        userDb.updateUserIsPosting(senderID, 0); // reset isPosting state                        
+                    }
+                } else {
+                    userDb.updateUserIsPosting(senderID, 0); // reset isPosting state
+                }
+                return ;                
             }
         }
-    } else if (messageAttachments) {
-        console.log(messageAttachments);
-        switch (messageAttachments[0].type) {
-            case "image":
-                if (userStatus > 0) {
-                    messageDb.insertMessage(userStatus, messageAttachments[0].payload.url, messageDb.TYPE_IMAGE);
-                }
+        // Default action
+        switch (textChecker) {
+            case 'list':
+                sendList(senderID);
                 break;
+            
+            case 'image':
+                sendImageMessage(senderID);
+                break;
+            
+            case 'gif':
+                sendGifMessage(senderID);
+                break;
+            
+            case 'audio':
+                sendAudioMessage(senderID);
+                break;
+            
+            case 'video':
+                sendVideo(senderID);
+                break;
+            
+            case 'file':
+                sendFileMessage(senderID);
+                break;
+            
+            case 'menu':
+                showMenu(senderID, "What can I do for you?");
+                break;
+            
+            case 'generic':
+                sendGenericMessage(senderID);
+                break;
+            
+            case 'more picture': 
+                sendMultipleImages(senderID);
+                break;
+
+            case 'event':
+                sendTextMessage(senderID, "https://www.facebook.com/events/419524075069645/");
+                break;
+            
+            case 'receipt':
+                sendReceiptMessage(senderID);
+                break;
+            
+            case 'quick reply':
+                sendQuickReply(senderID);
+                break;        
+            
+            case 'read receipt':
+                sendReadReceipt(senderID);
+                break;        
+            
+            case 'typing on':
+                sendTypingOn(senderID);
+                break;        
+            
+            case 'typing off':
+                sendTypingOff(senderID);
+                break;        
+            
+            case 'account linking':
+                sendAccountLinking(senderID);
+                break;
+            
+            case 'report':
+                console.log(event.message);
+                forwardMessage(senderID, event.message);
+                break;
+            
+            case 'show':
+                sendLatestPost(senderID);
+                break;
+
+            case 'show report':
+                sendLatestReport(senderID);
+                break;
+            
+            case 'hey':
+                getUserInfo(senderID).then(
+                    function (response) {
+                        sendTextMessage(senderID, "hey " + response["first_name"]);
+                    }
+                );
+                break;
+            
+            case 'post':
+                if (dbUser.role !== userDb.ROLE_MODERATOR) {
+                    showMenu(senderID, "What can I do for you?");                    
+                } else {
+                    postDb.insertPost(senderID);
+                    sendTextMessage(senderID, "OK. You will need to first provide the title of the post.");
+                }
+                break;            
             default:
-                const msg = "Message with attachment received."
-                sendTextMessage(senderID, msg);
+                showMenu(senderID, "Let me guide you on this.");
+                break;
         }
+    } else if (messageAttachments) {
+        messageAttachments.forEach(function (messageAttachment) {
+            switch (messageAttachment.type) {
+                case "image":
+                    if (dbUser.isReporting > 0) {
+                        messageDb.insertMessage(dbUser.isReporting, messageAttachment.payload.url, messageDb.TYPE_IMAGE);
+                    }
+                    break;
+                default:
+                    const msg = "Message with attachment received."
+                    sendTextMessage(senderID, msg);
+            }
+        });
     }
 
     return ;
@@ -466,10 +518,15 @@ function receivedPostback(event) {
         case "REPORT":
             showReportCategory(senderID);
             break;
+        
+        case "POST_NEWS_EVENT":
+            showPostNewsEventCategory(senderID);
+            break;
 
             case reportDb.REPORT_TYPE_SEX:
             case reportDb.REPORT_TYPE_DOMESTIC:
             case reportDb.REPORT_TYPE_OTHERS:
+
             case reportDb.REPORT_TYPE_EVENT:
             case reportDb.REPORT_TYPE_NEWS:
                 createNewReport(senderID, payload);
@@ -613,7 +670,7 @@ var createNewReport = async (function (reporterId, payload) {
             break;
         
         default:
-            showMenu(reporterId, "Hmm. I don't get what you mean. Here are the lists I can do.");
+            showMenu(reporterId, "Hmm, sorry. I don't get what you mean. See what can I help you?");
             break;
     }
 });
@@ -752,7 +809,6 @@ function sendTextMessage(recipientId, messageText) {
     };
 
     callSendAPI(messageData);
-
 }
 
 /*
@@ -760,7 +816,28 @@ function sendTextMessage(recipientId, messageText) {
 *
 */
 function showMenu(recipientId, title) {
-    var title = "What can I do for you?";
+    var dbUsers = await(userDb.getUser(senderID));
+    var dbUser = dbUsers[0];
+    var options = [];
+    if ( dbUser.role === userDb.ROLE_NGO ) {
+        options = [
+            {
+                type: "postback",
+                title: "Latest News / Events",
+                payload: "LATEST_NEWS_EVENT",
+            }, 
+            {
+                type: "postback",
+                title: "Report",
+                payload: "REPORT",
+            },
+            {
+                type: "postback",
+                title: "Post News / Events",
+                payload: "POST_NEWS_EVENT",
+            },
+        ];
+    }
     var options = [
         {
             type: "postback",
@@ -802,12 +879,25 @@ function showReportCategory(recipientId) {
     sendButtonMessage(recipientId, options, title);
 }
 
-/**
- * Send report
- * 
- */
-function report(reporterId, payloadType) {
-    
+/*
+* Send categories of report action NGO can perform.
+*/
+function showPostNewsEventCategory(recipientId) {
+    var title = "Nice. Which one you want to choose?";
+    var options = [
+        {
+            type: "postback",
+            title: "News",
+            payload: reportDb.REPORT_TYPE_NEWS,
+        },
+        {
+            type: "postback",
+            title: "Event",
+            payload: reportDb.REPORT_TYPE_EVENT,
+        },
+    ];
+
+    sendButtonMessage(recipientId, options, title);
 }
 
 /*

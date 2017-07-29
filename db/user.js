@@ -51,6 +51,20 @@ function updateUserState(facebookId, reportId) {
     }
 }
 
+function updateUserIsPosting(facebookId, postId) {
+    try {
+        connection.queryAsync( 
+            "UPDATE `advocate`.`user` SET `isPosting` = ? WHERE `facebookId` = ?",
+            [postId, facebookId]
+        );
+        return "Update Successful";
+
+    } catch (ex){
+        console.log(ex);
+        throw ex;
+    }
+}
+
 function getModeratorUsers(){
     return connection.queryAsync('SELECT * FROM user WHERE role = ?', [ROLE_MODERATOR]);
 }
@@ -61,4 +75,5 @@ module.exports.ROLE_NGO = ROLE_NGO;
 module.exports.insertUser = insertUser;
 module.exports.getUser = getUser;
 module.exports.updateUserState = updateUserState;
+module.exports.updateUserIsPosting = updateUserIsPosting;
 module.exports.getModeratorUsers = getModeratorUsers;
