@@ -28,3 +28,5 @@ function insertMessage(reportId, text, type) {
     throw ex;
   }
 }
+
+module.exports.getLatestUserReportMessage = getLatestUserReportMessage;
