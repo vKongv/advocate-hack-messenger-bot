@@ -720,7 +720,7 @@ function showMenu(recipientId) {
             payload: "REPORT",
         },
     ];
-    sendButtonMessage(receiptId, options, title);
+    sendButtonMessage(recipientId, options, title);
 }
 
 /*
@@ -745,7 +745,7 @@ function showReportCategory(recipientId) {
         },
     ];
 
-    sendButtonMessage(receiptId, options);
+    sendButtonMessage(recipientId, options);
 }
 
 /**
@@ -760,7 +760,7 @@ function report(reporterId, payloadType) {
 * Send a button message using the Send API.
 *
 */
-function sendButtonMessage(receiptId, buttons, title) {
+function sendButtonMessage(recipientId, buttons, title) {
     if ( !title ) {
         title = "";
     }
