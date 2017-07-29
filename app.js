@@ -21,6 +21,8 @@ const
     postDb = require('./db/post.js'),
     messageDb = require('./db/message.js');
 
+const REPORT_RESPONSE_MESSAGE = "Can you please provide us the following details: Time and Date of incident, Location, Description of event. Also, Upload as many pictures as necessary. Do provide us your mobile number in case we need to contact you for further details. Please be assured that the information you provide will not be published publicly but will be handled only by relevant authorities.";
+
 var app = express();
 app.set('port', process.env.PORT || 5000);
 app.set('view engine', 'ejs');
@@ -462,8 +464,19 @@ function receivedPostback(event) {
             sendLatestPost(senderID);
             break;
         case "REPORT":
-            show(senderID);
+            showReportCategory(senderID);
             break;
+
+            case "SEX":
+            case "DOMESTIC":
+            case "OTHERS":
+                const msg = "Thank you for reporting a "+ payload +" Trafficking case. " + REPORT_RESPONSE_MESSAGE;
+                sendTextMessage(reporterId, msg);
+                
+                //TODO: create new record and set type of report based on 'payloadType'
+
+                break;
+
         default:
             sendTextMessage(senderID, "Postback called");
             break;
@@ -681,49 +694,30 @@ function sendTextMessage(recipientId, messageText) {
 }
 
 /*
-* Send a button message using the Send API.
+* Send menu for users.
 *
 */
 function showMenu(recipientId) {
-    var messageData = {
-        recipient: {
-            id: recipientId
+    var title = "What can I do for you?";
+    var options = [
+        {
+            type: "postback",
+            title: "Latest News / Events",
+            payload: "LATEST_NEWS_EVENT",
+        }, 
+        {
+            type: "postback",
+            title: "Report",
+            payload: "REPORT",
         },
-        message: {
-            attachment: {
-                type: "template",
-                payload: {
-                    template_type: "button",
-                    text: "What can I do for you?",
-                    buttons:[
-                        {
-                            type: "postback",
-                            title: "Latest News / Events",
-                            payload: "LATEST_NEWS_EVENT",
-                        }, 
-                        {
-                            type: "postback",
-                            title: "Report",
-                            payload: "REPORT",
-                        },
-                        {
-                            type: "postback",
-                            title: "...",
-                            payload: "MORE_CATEGORY",
-                        },
-                        
-                    ],
-                }
-            }
-        }
-    };  
-    
-    callSendAPI(messageData);
+    ];
+    sendButtonMessage(recipientId, options, title);
 }
+
 /*
 * Send categories of report action user can perform.
 */
-function showReportCategory(recipientId, more) {
+function showReportCategory(recipientId) {
     var options = [
         {
             type: "postback",
@@ -737,20 +731,31 @@ function showReportCategory(recipientId, more) {
         },
         {
             type: "postback",
-            title: "...",
-            payload: "MORE_CATEGORY",
+            title: "Others",
+            payload: "OTHERS",
         },
-        {
-            type: "postback",
-            title: "Construction Trafficking",
-            payload: "REPORT",
-        },
-        {
-            type: "postback",
-            title: "Report",
-            payload: "REPORT",
-        }
     ];
+
+    sendButtonMessage(recipientId, options);
+}
+
+/**
+ * Send report
+ * 
+ */
+function report(reporterId, payloadType) {
+    
+}
+
+/*
+* Send a button message using the Send API.
+*
+*/
+function sendButtonMessage(recipientId, buttons, title) {
+    if ( !title ) {
+        title = "";
+    }
+
     var messageData = {
         recipient: {
             id: recipientId
@@ -760,15 +765,8 @@ function showReportCategory(recipientId, more) {
                 type: "template",
                 payload: {
                     template_type: "button",
-                    text: "",
-                    buttons:[
-                        {
-                            type: "postback",
-                            title: "Latest News / Events",
-                            payload: "LATEST_NEWS_EVENT",
-                        }, 
-                        
-                    ],
+                    text: title,
+                    buttons: buttons,
                 }
             }
         }
