@@ -25,11 +25,25 @@ function insertUser(facebookId, role) {
          role = ROLE_USER;
     }
     try {
-        connection.queryAsync( 
+       connection.queryAsync( 
             "INSERT INTO `advocate`.`user` (`facebookId`, `role`) VALUES (?, ?);", 
             [facebookId, role]
         );
         return "Insert Successful";
+
+    } catch (ex){
+        console.log(ex);
+        throw ex;
+    }
+}
+
+function updateUserState(facebookId, reportId) {
+    try {
+        connection.queryAsync( 
+            "UPDATE `advocate`.`user` SET `isReporting = ?` WHERE `facebookId = ?",
+            [reportId, facebookId]
+        );
+        return "Update Successful";
 
     } catch (ex){
         console.log(ex);
