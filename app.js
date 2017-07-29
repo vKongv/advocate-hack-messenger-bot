@@ -672,8 +672,8 @@ var createNewReport = async (function (reporterId, payload) {
 
         case reportDb.REPORT_TYPE_EVENT:
         case reportDb.REPORT_TYPE_NEWS:
-            const msg = "Thanks for contributing. Please provide us your " + payload + " details. \n\nFor ending the submission, type \"END\"";
-            sendTextMessage(reporterId, msg);
+            const msgEvent = "Thanks for contributing. Please provide us your " + payload + " details. \n\nFor ending the submission, type \"END\"";
+            sendTextMessage(reporterId, msgEvent);
             var report = await(reportDb.insertReport(reporterId, payload));
             userDb.updateUserState(reporterId, report.insertId);
             break;
