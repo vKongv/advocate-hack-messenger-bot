@@ -509,7 +509,7 @@ function mapPostToGenericTemplate(post) {
     return template;
 }
 
-async (function sendLatestPost(recipientId) {
+var sendLatestPost = async (function(recipientId) {
     var posts = await(postDb.getLatestPost());
     if (posts.length > 0) {
         for (var i = 0; i < posts.length; i++) {
