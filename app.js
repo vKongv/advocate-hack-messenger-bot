@@ -523,15 +523,15 @@ function receivedAccountLink(event) {
 
 function formatReportMessages (messages) {
     var images = [];
-    var formattedMessages = messages[0];
+    var formattedMessages = messages.join('\n>> ');
     return {formattedMessages, images};
 }
 
 var getLatestReport = async(function (senderId) {
     var messages = await(messageDb.getLatestUserReportMessage(senderId));
     if (messages.length > 0) {
-        var formattedMessages = formatReportMessages(messages);
-        return sendTextMessage(senderId, JSON.stringify(messages));
+        var newMessages = formatReportMessages(messages);
+        return sendTextMessage(senderId, newMessages.formattedMessages);
     } else {
         return sendTextMessage(senderId, 'No report found for your account');
     }
