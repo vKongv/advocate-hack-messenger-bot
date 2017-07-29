@@ -435,8 +435,8 @@ var receivedMessage = async (function(event) {
         messageAttachments.forEach(function (messageAttachment) {
             switch (messageAttachment.type) {
                 case "image":
-                    if (userStatus > 0) {
-                        messageDb.insertMessage(userStatus, messageAttachment.payload.url, messageDb.TYPE_IMAGE);
+                    if (dbUser.isReporting > 0) {
+                        messageDb.insertMessage(dbUser.isReporting, messageAttachment.payload.url, messageDb.TYPE_IMAGE);
                     }
                     break;
                 default:
