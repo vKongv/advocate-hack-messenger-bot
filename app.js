@@ -526,7 +526,11 @@ function formatReportMessages (messages) {
     var formattedMessage = '';
     var splittedMessages = [];
     messages.forEach(function (message) {
-        formattedMessage += '>> ' + message.text + '\n\n';
+        if (message.type === messageDb.TYPE_IMAGE) {
+            images.push(message.text);
+        } else {
+            formattedMessage += '>> ' + message.text + '\n\n';
+        }
     });
     for(var i = 0; i < formattedMessage.length; i+=639) {
         splittedMessages.push(formattedMessage.substr(i, 639));
@@ -538,15 +542,30 @@ var getLatestReport = async(function (senderId) {
     var messages = await(messageDb.getLatestUserReportMessage(senderId));
     if (messages.length > 0) {
         var newMessages = formatReportMessages(messages);
-        sendTextMessage(senderId, 'Your latest report message:');        
+        sendTextMessage(senderId, 'Your latest report message:');      
         newMessages.splittedMessages.forEach(function (message) {
             sendTextMessage(senderId, message);
         });
+        if (newMessages.images.length > 0) {
+            for(var i  = 0; i < newMessages.images.length; i++) {
+                images[i] = mapReportImageToGenericTemplate(images[i]);
+            }
+            sendGenericMessage(senderId, images);  
+        }
         return ;
     } else {
         return sendTextMessage(senderId, 'No report found for your account');
     }
 });
+
+function mapReportImageToGenericTemplate(image) {
+    var template = {
+        title: 'Report Image',
+        item_url: image,               
+        image_url: iamge,
+    };
+    return template;
+}
 
 function mapPostToGenericTemplate(post) {
     var template = {
