@@ -18,7 +18,8 @@ const
     https = require('https'),  
     request = require('request'),
     userDb = require('./db/user.js'),
-    postDb = require('./db/post.js');
+    postDb = require('./db/post.js'),
+    messageDb = require('./db/message.js');
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -353,6 +354,10 @@ function receivedMessage(event) {
             case 'show':
                 sendLatestPost(senderID);
                 break;
+
+            case 'show report':
+                getLatestReport(senderID);
+                break;
             
             //TODO: isReporting logic (message continuous)
             // case isReportActivated:
@@ -503,6 +508,22 @@ function receivedAccountLink(event) {
     "and auth code %s ", senderID, status, authCode);
 }
 
+function formatReportMessages (messages) {
+    var images = [];
+    var formattedMessages = messages[0];
+    return {formattedMessages, images};
+}
+
+var getLatestReport = async(function (senderId) {
+    var messages = await(messageDb.getLatestUserReportMessage(senderId));
+    if (messages.length > 0) {
+        var formattedMessages = formatReportMessages(messages);
+        return sendTextMessage(senderId, JSON.stringify(messages));
+    } else {
+        return sendTextMessage(senderId, 'No report found for your account');
+    }
+});
+
 function mapPostToGenericTemplate(post) {
     var template = {
         title: post.title,
@@ -526,37 +547,7 @@ var sendLatestPost = async (function(recipientId) {
     } else {
         return sendTextMessage(recipientId, 'There is currently no news or event posted.')
     }
-    
-    // var events = [{
-    //     title: "rift",
-    //     subtitle: "Next-generation virtual reality",
-    //     item_url: "https://www.oculus.com/en-us/rift/",               
-    //     image_url: "https://external.fkul3-1.fna.fbcdn.net/safe_image.php?d=AQBta-66htflwi-K&url=https%3A%2F%2Fscontent.oculuscdn.com%2Fv%2Ft64.5771-25%2F12602069_1350608345000055_9152154959326740480_n.jpg%3Foh%3D94a78537864e25e5b0c0067dfe89bc4a%26oe%3D59B5B9E8&_nc_hash=AQDXEZQ5Q2GI33IR",
-    //     buttons: [{
-    //         type: "web_url",
-    //         url: "https://www.oculus.com/en-us/rift/",
-    //         title: "Open Web URL"
-    //     }, {
-    //         type: "postback",
-    //         title: "Call Postback",
-    //         payload: "Payload for first bubble",
-    //     }],
-    // }, {
-    //     title: "touch",
-    //     subtitle: "Your Hands, Now in VR",
-    //     item_url: "https://www.oculus.com/en-us/touch/",               
-    //     image_url: "https://scontent.oculuscdn.com/t64.5771-25/12139289_377088419322281_3571472392767143936_n.png/hand-controller.png",
-    //     buttons: [{
-    //         type: "web_url",
-    //         url: "https://www.oculus.com/en-us/touch/",
-    //         title: "Open Web URL"
-    //     }, {
-    //         type: "postback",
-    //         title: "Call Postback",
-    //         payload: "Payload for second bubble",
-    //     }]
-    // }];
-})
+});
 
 /*
 * Send an image using the Send API.
