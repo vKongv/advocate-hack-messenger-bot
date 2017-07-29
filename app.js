@@ -299,7 +299,7 @@ var receivedMessage = async (function(event) {
             return;
         } else if (dbUser.role === userDb.ROLE_MODERATOR ) {
             if (dbUser.isPosting) {
-                var postsDetails = postDb.getPostDetails(dbUser.isPosting);
+                var postDetails = await(postDb.getPostDetails(dbUser.isPosting));
                 if (postDetails.length > 0) {
                     var post = postDetails[0];
                     if (!post.title) {
