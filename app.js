@@ -522,10 +522,10 @@ function formatReportMessages (messages) {
 
 var sendLatesReport = async(function (senderId) {
     var messages = await(messageDb.getLatestUserReportMessage(senderId));
-    var moderator = await(userDb.getModeratorUsers());
-    if (moderator.length > 0 && messages.length > 0) {
+    var moderators = await(userDb.getModeratorUsers());
+    if (moderators.length > 0 && messages.length > 0) {
         var newMessages = formatReportMessages(messages);
-        var moderatorId = moderator.facebookId;
+        var moderatorId = moderators[0].facebookId;
         sendTextMessage(moderatorId, "There is a new report coming in...");        
         newMessages.splittedMessages.forEach(function (message) {
             sendTextMessage(moderatorId, message);
