@@ -526,7 +526,7 @@ function formatReportMessages (messages) {
     var formattedMessage = '';
     var splittedMessages = [];
     messages.forEach(function (message) {
-        formattedMessage += '>> ' + message.text + '\n';
+        formattedMessage += '>> ' + message.text + '\n\n';
     });
     for(var i = 0; i < formattedMessage.length; i+=639) {
         splittedMessages.push(formattedMessage.substr(i, 639));
