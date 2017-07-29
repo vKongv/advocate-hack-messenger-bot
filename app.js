@@ -84,7 +84,7 @@ app.get('/webhook', function(req, res) {
 * https://developers.facebook.com/docs/messenger-platform/product-overview/setup#subscribe_app
 *
 */
-app.post('/webhook', function (req, res) {
+app.post('/webhook', async (function (req, res) {
     var data = req.body;
     
     // Make sure this is a page subscription
@@ -119,7 +119,7 @@ app.post('/webhook', function (req, res) {
         //
         // You must send back a 200, within 20 seconds, to let us know you've 
         // successfully received the callback. Otherwise, the request will time out.
-        res.sendStatus(200);
+        return res.sendStatus(200);
     }
 }));
 
