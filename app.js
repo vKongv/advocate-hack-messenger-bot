@@ -547,7 +547,7 @@ function mapReportImageToGenericTemplate(image) {
     var template = {
         title: 'Report Image',
         item_url: image,               
-        image_url: iamge,
+        image_url: image,
     };
     return template;
 }
