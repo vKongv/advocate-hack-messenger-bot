@@ -389,6 +389,7 @@ var receivedMessage = async (function(event) {
             }
         }
     } else if (messageAttachments) {
+        console.log(messageAttachments);
         switch (messageAttachments.type) {
             case "image":
                 if (userStatus > 0) {
