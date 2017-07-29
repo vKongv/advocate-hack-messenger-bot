@@ -453,9 +453,7 @@ function receivedPostback(event) {
             case reportDb.REPORT_TYPE_SEX:
             case reportDb.REPORT_TYPE_DOMESTIC:
             case reportDb.REPORT_TYPE_OTHERS:
-                const msg = "Thank you for reporting a case on "+ payload +" Trafficking. " + REPORT_RESPONSE_MESSAGE;
-                sendTextMessage(senderID, msg);
-                reportDb.insertReport(senderID, payload);
+                createNewReport(senderID, payload);
                 
                 //TODO: create new record and set type of report based on 'payloadType'
 
@@ -576,6 +574,13 @@ var sendLatestPost = async (function(recipientId) {
     } else {
         return sendTextMessage(recipientId, 'There is currently no news or event posted.')
     }
+});
+
+var createNewReport = async(function (reporterId, payload) {
+    const msg = "Thank you for reporting a case on "+ payload +" Trafficking. " + REPORT_RESPONSE_MESSAGE;
+    sendTextMessage(reporterId, msg);
+    var report = await(reportDb.insertReport(reporterId, payload));
+    console.log(report);
 });
 
 /*
