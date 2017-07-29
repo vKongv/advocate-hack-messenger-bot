@@ -361,7 +361,7 @@ var receivedMessage = async (function(event) {
                 break;
             
             case 'menu':
-                showMenu(senderID);
+                showMenu(senderID, "What can I do for you?");
                 break;
             
             case 'generic':
@@ -423,14 +423,14 @@ var receivedMessage = async (function(event) {
             
             case 'post':
                 if (dbUser.role !== userDb.ROLE_MODERATOR) {
-                    showMenu(senderID);                    
+                    showMenu(senderID, "What can I do for you?");                    
                 } else {
                     postDb.insertPost(senderID);
                     sendTextMessage(senderID, "OK. You will need to first provide the title of the post.");
                 }
                 break;            
             default:
-                showMenu(senderID);
+                showMenu(senderID, "Let me guide you on this.");
                 break;
         }
     } else if (messageAttachments) {
@@ -517,22 +517,28 @@ function receivedPostback(event) {
     switch (payload) {
         case "GET_STARTED":
             userDb.insertUser(senderID);
-            showMenu(senderID);
+            showMenu(senderID, "Here are the things you can chat to me.");
             break;
+
         case "LATEST_NEWS_EVENT":
             sendLatestPost(senderID);
             break;
+
         case "REPORT":
             showReportCategory(senderID);
+            break;
+        
+        case "POST_NEWS_EVENT":
+            showPostNewsEventCategory(senderID);
             break;
 
             case reportDb.REPORT_TYPE_SEX:
             case reportDb.REPORT_TYPE_DOMESTIC:
             case reportDb.REPORT_TYPE_OTHERS:
-                createNewReport(senderID, payload);
-                
-                //TODO: create new record and set type of report based on 'payloadType'
 
+            case reportDb.REPORT_TYPE_EVENT:
+            case reportDb.REPORT_TYPE_NEWS:
+                createNewReport(senderID, payload);
                 break;
 
         default:
@@ -654,11 +660,28 @@ var sendLatestPost = async (function(recipientId) {
 });
 
 var createNewReport = async (function (reporterId, payload) {
-    const msg = "Thank you for reporting a case on "+ payload +" Trafficking. " + REPORT_RESPONSE_MESSAGE;
-    sendTextMessage(reporterId, msg);
-    sendTextMessage(reporterId, "To end reporting, type \"END\"");
-    var report = await(reportDb.insertReport(reporterId, payload));
-    userDb.updateUserState(reporterId, report.insertId);
+    switch (payload) {
+        case reportDb.REPORT_TYPE_SEX:
+        case reportDb.REPORT_TYPE_DOMESTIC:
+        case reportDb.REPORT_TYPE_OTHERS:
+            const msg = "Thank you for reporting a case on "+ payload +" Trafficking. " + REPORT_RESPONSE_MESSAGE + "\n\nTo end reporting, type \"END\"";
+            sendTextMessage(reporterId, msg);
+            var report = await(reportDb.insertReport(reporterId, payload));
+            userDb.updateUserState(reporterId, report.insertId);
+            break;
+
+        case reportDb.REPORT_TYPE_EVENT:
+        case reportDb.REPORT_TYPE_NEWS:
+            const msg = "Thanks for contributing. Please provide us your " + payload + " details. \n\nFor ending the submission, type \"END\"";
+            sendTextMessage(reporterId, msg);
+            var report = await(reportDb.insertReport(reporterId, payload));
+            userDb.updateUserState(reporterId, report.insertId);
+            break;
+        
+        default:
+            showMenu(reporterId, "Hmm, sorry. I don't get what you mean. See what can I help you?");
+            break;
+    }
 });
 
 var getUserCurrentState = async (function (reporterId) {
@@ -795,15 +818,35 @@ function sendTextMessage(recipientId, messageText) {
     };
 
     callSendAPI(messageData);
-
 }
 
 /*
 * Send menu for users.
 *
 */
-function showMenu(recipientId) {
-    var title = "What can I do for you?";
+function showMenu(recipientId, title) {
+    var dbUsers = await(userDb.getUser(senderID));
+    var dbUser = dbUsers[0];
+    var options = [];
+    if ( dbUser.role === userDb.ROLE_NGO ) {
+        options = [
+            {
+                type: "postback",
+                title: "Latest News / Events",
+                payload: "LATEST_NEWS_EVENT",
+            }, 
+            {
+                type: "postback",
+                title: "Report",
+                payload: "REPORT",
+            },
+            {
+                type: "postback",
+                title: "Post News / Events",
+                payload: "POST_NEWS_EVENT",
+            },
+        ];
+    }
     var options = [
         {
             type: "postback",
@@ -845,12 +888,25 @@ function showReportCategory(recipientId) {
     sendButtonMessage(recipientId, options, title);
 }
 
-/**
- * Send report
- * 
- */
-function report(reporterId, payloadType) {
-    
+/*
+* Send categories of report action NGO can perform.
+*/
+function showPostNewsEventCategory(recipientId) {
+    var title = "Nice. Which one you want to choose?";
+    var options = [
+        {
+            type: "postback",
+            title: "News",
+            payload: reportDb.REPORT_TYPE_NEWS,
+        },
+        {
+            type: "postback",
+            title: "Event",
+            payload: reportDb.REPORT_TYPE_EVENT,
+        },
+    ];
+
+    sendButtonMessage(recipientId, options, title);
 }
 
 /*
