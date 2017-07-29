@@ -14,7 +14,7 @@ var ROLE_NGO = 'NGO';
 
 function getUser(id) {
     if ( id ) {
-        return connection.queryAsync('SELECT * FROM user WHERE id = ?', [id]);
+        return connection.queryAsync('SELECT * FROM user WHERE facebookId = ?', [id]);
     } else {
         return connection.queryAsync('SELECT * FROM user');
     }
