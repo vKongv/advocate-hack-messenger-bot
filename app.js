@@ -502,6 +502,7 @@ function mapPostToGenericTemplate(post) {
         title: post.title,
         item_url: post.link,               
         image_url: post.imageUrl ? post.imageUrl : '',
+        subtitle: !post.imageUrl ? post.title : '',
         buttons: [{
             type: "element_share"
         }],
