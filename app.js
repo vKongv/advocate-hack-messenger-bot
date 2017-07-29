@@ -320,7 +320,7 @@ function receivedMessage(event) {
                 break;
 
             case messageText.indexOf('event') !== -1:
-                sendEvent(senderID);
+                sendTextMessage(senderID, "https://www.facebook.com/events/419524075069645/");
                 break;
             
             case messageText.indexOf('receipt') !== -1:
@@ -386,7 +386,7 @@ function receivedMessage(event) {
         //     default:
 
         //"Message with attachment received"
-                sendTextMessage(senderID, event.message);
+                sendTextMessage(senderID, messageAttachments);
                 // break;
         // }
     }
@@ -1080,12 +1080,18 @@ function sendEvent (recipientID) {
             id: recipientID,
         },
         message: {
-            attachments:[{
-                title:"Ed Sheeran Live In Kuala Lumpur 2017",
-                url:"https://www.facebook.com/events/419524075069645/",
-                type:"fallback",
-                payload: null}
-            ]
+            attachments:{
+                type: "template",
+                payload: {
+                    template_type: "generic",
+                    elements: [{
+                        title:"Ed Sheeran Live In Kuala Lumpur 2017",
+                        url:"https://www.facebook.com/events/419524075069645/",
+                        type:"fallback",
+                        payload: null
+                    }]
+                    }
+                }
             // attachment: {
             //     type: "template",
             //     payload: {
