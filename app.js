@@ -1061,7 +1061,8 @@ function sendEvent (recipientID) {
                     template_type: "generic",
                     elements: [{
                         title: "Event Test",
-                        item_url: "https://www.facebook.com/events/464835850549205/?acontext=%7B%22ref%22%3A%222%22%2C%22ref_dashboard_filter%22%3A%22upcoming%22%2C%22action_history%22%3A%22[%7B%5C%22surface%5C%22%3A%5C%22dashboard%5C%22%2C%5C%22mechanism%5C%22%3A%5C%22main_list%5C%22%2C%5C%22extra_data%5C%22%3A[]%7D]%22%7D",
+                        image_url: "https://scontent.fkul6-1.fna.fbcdn.net/v/t31.0-0/c0.17.959.505/p180x540/19400532_10154886034231443_1749597473098793906_o.jpg?_nc_eui2=v1%3AAeH8fwEH3we4dA1l7RgTU4cBdhgJTd_fU-ESbMGk-LUIo2qSDrGrKfOG5fnQtf4gN_S-r_MTaAqBCO-hLmRcKQxgLV882P8jKvtS1pYGmt3Jyg&amp;oh=39eae045bcf171d320e6d4ce092ec502&amp;oe=59FB9BD6",
+                        item_url: "https://www.facebook.com/events/419524075069645/%3Facontext=%257B%2522ref%2522%253A%25223%2522%252C%2522ref_newsfeed_story_type%2522%253A%2522regular%2522%252C%2522action_history%2522%253A%2522null%2522%257D",
                         subtitle: "Event testing",
                     },],
                 }
