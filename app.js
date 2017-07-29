@@ -17,7 +17,7 @@ const
     express = require('express'),
     https = require('https'),  
     request = require('request'),
-    userDb = require('./db/user.js');
+    userDb = require('./db/user.js'),
     postDb = require('./db/post.js');
 
 var app = express();
@@ -510,7 +510,7 @@ function mapPostToGenericTemplate(post) {
 }
 
 async (function sendLatestPost(recipientId) {
-    var posts = await(post.getLatestPost());
+    var posts = await(postDb.getLatestPost());
     if (posts.length > 0) {
         for (var i = 0; i < posts.length; i++) {
             posts[i] = mapPostToGenericTemplate(post[i]);
