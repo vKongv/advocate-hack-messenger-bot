@@ -29,4 +29,6 @@ function insertMessage(reportId, text, type) {
   }
 }
 
+module.exports.TYPE_TEXT = TYPE_TEXT;
+module.exports.TYPE_IMAGE = TYPE_IMAGE;
 module.exports.getLatestUserReportMessage = getLatestUserReportMessage;
