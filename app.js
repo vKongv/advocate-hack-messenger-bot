@@ -720,16 +720,7 @@ function showMenu(recipientId) {
                             title: "...",
                             payload: "MORE_CATEGORY",
                         },
-                        {
-                            type: "postback",
-                            title: "Report",
-                            payload: "REPORT",
-                        },
-                        {
-                            type: "postback",
-                            title: "Report",
-                            payload: "REPORT",
-                        }
+                        
                     ],
                 }
             }
