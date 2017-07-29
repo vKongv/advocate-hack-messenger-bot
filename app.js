@@ -1184,7 +1184,6 @@ function sendList (recipientID) {
                             subtitle: "See all our colors",
                             default_action: {
                                 type: "postback",
-                                title: "Latest News / Events",
                                 payload: "LATEST_NEWS_EVENT",
                             },
                         },
