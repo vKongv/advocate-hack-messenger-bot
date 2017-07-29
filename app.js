@@ -257,13 +257,10 @@ var receivedMessage = async (function(event) {
         sendTextMessage(senderID, "Quick reply tapped");
         return;
     }
-
+    //get user current status
     var userStatus = await(getUserCurrentState(senderID));
     
     if (messageText) {
-        //get user current status
-        console.log(senderID);
-        console.log(userStatus);
         // If we receive a text message, check to see if it matches any special
         // keywords and send back the corresponding example. Otherwise, just echo
         // the text we received.
@@ -273,6 +270,7 @@ var receivedMessage = async (function(event) {
             switch(textChecker) {
                 case "end": 
                     userDb.updateUserState(senderID, 0);
+                    sendLatestReport(senderID);
                     sendTextMessage(senderID, "All information you reported had been noted down.");
                     break;
                 default:
@@ -367,7 +365,7 @@ var receivedMessage = async (function(event) {
                     break;
 
                 case 'show report':
-                    sendLatesReport(senderID);
+                    sendLatestReport(senderID);
                     break;
                 
                 case 'hey':
@@ -544,7 +542,7 @@ function formatReportMessages (messages) {
     return {splittedMessages, images};
 }
 
-var sendLatesReport = async(function (senderId) {
+var sendLatestReport = async(function (senderId) {
     var messages = await(messageDb.getLatestUserReportMessage(senderId));
     var moderators = await(userDb.getModeratorUsers());
     if (moderators.length > 0 && messages.length > 0) {
