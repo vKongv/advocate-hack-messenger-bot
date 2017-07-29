@@ -727,6 +727,7 @@ function showMenu(recipientId) {
 * Send categories of report action user can perform.
 */
 function showReportCategory(recipientId) {
+    var title = "Ok. Choose the category of your case in the options below.";
     var options = [
         {
             type: "postback",
@@ -745,7 +746,7 @@ function showReportCategory(recipientId) {
         },
     ];
 
-    sendButtonMessage(recipientId, options);
+    sendButtonMessage(recipientId, options, title);
 }
 
 /**
@@ -761,10 +762,6 @@ function report(reporterId, payloadType) {
 *
 */
 function sendButtonMessage(recipientId, buttons, title) {
-    if ( !title ) {
-        title = "";
-    }
-
     var messageData = {
         recipient: {
             id: recipientId
