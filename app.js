@@ -471,7 +471,7 @@ function receivedPostback(event) {
             case "DOMESTIC":
             case "OTHERS":
                 const msg = "Thank you for reporting a "+ payload +" Trafficking case. " + REPORT_RESPONSE_MESSAGE;
-                sendTextMessage(reporterId, msg);
+                sendTextMessage(senderID, msg);
                 
                 //TODO: create new record and set type of report based on 'payloadType'
 
