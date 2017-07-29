@@ -40,7 +40,7 @@ function insertUser(facebookId, role) {
 function updateUserState(facebookId, reportId) {
     try {
         connection.queryAsync( 
-            "UPDATE `advocate`.`user` SET `isReporting = ?` WHERE `facebookId = ?",
+            "UPDATE `advocate`.`user` SET `isReporting` = ? WHERE `facebookId` = ?",
             [reportId, facebookId]
         );
         return "Update Successful";
