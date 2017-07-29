@@ -278,81 +278,79 @@ function receivedMessage(event) {
         // keywords and send back the corresponding example. Otherwise, just echo
         // the text we received.
 
-        switch (true) {
-            case messageText === "Get Started":
-                showMenu(senderID);
-                break;
-            
-            case messageText.indexOf('list') !== -1:
+        var textChecker = messageText.toLowerCase();
+
+        switch (textChecker) {
+            case 'list':
                 sendList(senderID);
                 break;
             
-            case messageText.indexOf('image') !== -1:
+            case 'image':
                 sendImageMessage(senderID);
                 break;
             
-            case messageText.indexOf('gif') !== -1:
+            case 'gif':
                 sendGifMessage(senderID);
                 break;
             
-            case messageText.indexOf('audio') !== -1:
+            case 'audio':
                 sendAudioMessage(senderID);
                 break;
             
-            case messageText.indexOf('video')!== -1:
+            case 'video':
                 sendVideo(senderID);
                 break;
             
-            case messageText.indexOf('file')!== -1:
+            case 'file':
                 sendFileMessage(senderID);
                 break;
             
-            case messageText.indexOf('menu') !== -1:
+            case 'menu':
                 showMenu(senderID);
                 break;
             
-            case messageText.indexOf('generic') !== -1:
+            case 'generic':
                 sendGenericMessage(senderID);
                 break;
             
-            case messageText.indexOf('more picture') !== -1: 
+            case 'more picture': 
                 sendMultipleImages(senderID);
                 break;
 
-            case messageText.indexOf('event') !== -1:
+            case 'event':
                 sendTextMessage(senderID, "https://www.facebook.com/events/419524075069645/");
                 break;
             
-            case messageText.indexOf('receipt') !== -1:
+            case 'receipt':
                 sendReceiptMessage(senderID);
                 break;
             
-            case messageText.indexOf('quick reply') !== -1:
+            case 'quick reply':
                 sendQuickReply(senderID);
                 break;        
             
-            case messageText.indexOf('read receipt') !== -1:
+            case 'read receipt':
                 sendReadReceipt(senderID);
                 break;        
             
-            case messageText.indexOf('typing on') !== -1:
+            case 'typing on':
                 sendTypingOn(senderID);
                 break;        
             
-            case messageText.indexOf('typing off') !== -1:
+            case 'typing off':
                 sendTypingOff(senderID);
                 break;        
             
-            case messageText.indexOf('account linking') !== -1:
+            case 'account linking':
                 sendAccountLinking(senderID);
                 break;
             
-            case messageText === 'report':
+            case 'report':
                 console.log(event.message);
                 forwardMessage(senderID, event.message);
                 break;
             
-            case messageText === 'show':
+            case 'show':
                 sendLatestPost(senderID);
                 break;
             
