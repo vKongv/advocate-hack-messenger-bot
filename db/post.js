@@ -26,7 +26,7 @@ var insertPost = async (function (userId) {
             "INSERT INTO `advocate`.`post` (`userId`) VALUES (?);", 
             [userId]
         ));
-        user.updateUserIsPosting(userId, postInserted);
+        user.updateUserIsPosting(userId, postInserted.insertId);
         return "Insert Successful";
 
     } catch (ex){
