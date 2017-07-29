@@ -289,7 +289,7 @@ var receivedMessage = async (function(event) {
                         "I'm here to listen.",
                         "Continue.",
                     ];
-                    messageDb.insertMessage(userStatus, messageText, messageDb.TYPE_TEXT);
+                    messageDb.insertMessage(dbUser.isReporting, messageText, messageDb.TYPE_TEXT);
                     var min = Math.ceil(0);
                     var max = Math.floor(msgReplied.length);
                     const msgIndex = Math.floor(Math.random() * (max - min + 1)) + min;
