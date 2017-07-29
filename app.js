@@ -21,7 +21,7 @@ const
     postDb = require('./db/post.js'),
     messageDb = require('./db/message.js');
 
-const REPORT_RESPONSE_MESSAGE = "Can you please provide us the following details: Time and Date of incident, Location, Description of event. Also, Upload as many pictures as necessary. Do provide us your mobile number in case we need to contact you for further details. Please be assured that the information you provide will not be published publicly but will be handled only by relevant authorities.";
+const REPORT_RESPONSE_MESSAGE = "Can you please provide us the following details: \n - Time \n - Date of incident \n - Location \n - Description of event. \n Also, Upload as many pictures as necessary. Do provide us your mobile number in case we need to contact you for further details.  \n ** Note: Please be assured that the information you provide will not be published publicly but will be handled only by relevant authorities.";
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
