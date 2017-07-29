@@ -527,6 +527,7 @@ function formatReportMessages (messages) {
     var splittedMessages = [];
     messages.forEach(function (message) {
         console.log(message.type);
+        console.log(message);
         if (message.type === messageDb.TYPE_IMAGE) {
             images.push(message.text);
         } else {
