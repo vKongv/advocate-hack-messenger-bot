@@ -9,6 +9,8 @@ connection.query('USE ' + dbconfig.database);
 var REPORT_TYPE_SEX = 'SEX';
 var REPORT_TYPE_DOMESTIC = 'DOMESTIC';
 var REPORT_TYPE_OTHERS = 'OTHERS';
+var REPORT_TYPE_EVENT = 'EVENT';
+var REPORT_TYPE_NEWS = 'NEWS';
 
 function getAllReport() {
   return connection.queryAsync('SELECT * FROM report');
@@ -66,4 +68,6 @@ module.exports.put = function (req) {
 module.exports.REPORT_TYPE_SEX = REPORT_TYPE_SEX;
 module.exports.REPORT_TYPE_DOMESTIC = REPORT_TYPE_DOMESTIC;
 module.exports.REPORT_TYPE_OTHERS = REPORT_TYPE_OTHERS;
+module.exports.REPORT_TYPE_EVENT = REPORT_TYPE_EVENT;
+module.exports.REPORT_TYPE_NEWS = REPORT_TYPE_NEWS;
 module.exports.insertReport = insertReport;

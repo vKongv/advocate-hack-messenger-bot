@@ -315,7 +315,7 @@ var receivedMessage = async (function(event) {
                     break;
                 
                 case 'menu':
-                    showMenu(senderID);
+                    showMenu(senderID, "What can I do for you ?");
                     break;
                 
                 case 'generic':
@@ -370,18 +370,13 @@ var receivedMessage = async (function(event) {
                 case 'hey':
                     getUserInfo(senderID).then(
                         function (response) {
-                            sendTextMessage(senderID, "hey " + response["first_name"]);
+                            sendTextMessage(senderID, "Hey " + response["first_name"]);
                         }
                     );
                     break;
                 
                 default:
-                    const numberOfMeow = Math.floor(2 * Math.random()) + 1;
-                    let message = '';
-                    for (let i = 0; i < numberOfMeow; i++) {
-                        message += 'Meow' + ' ';
-                    }
-                    sendTextMessage(senderID, message);
+                    showMenu(reporterId, "Let me guide you on this.");
                     break;
             }
         }
@@ -461,11 +456,13 @@ function receivedPostback(event) {
     switch (payload) {
         case "GET_STARTED":
             userDb.insertUser(senderID);
-            showMenu(senderID);
+            showMenu(senderID, "Here are the things you can chat to me.");
             break;
+
         case "LATEST_NEWS_EVENT":
             sendLatestPost(senderID);
             break;
+
         case "REPORT":
             showReportCategory(senderID);
             break;
@@ -473,10 +470,9 @@ function receivedPostback(event) {
             case reportDb.REPORT_TYPE_SEX:
             case reportDb.REPORT_TYPE_DOMESTIC:
             case reportDb.REPORT_TYPE_OTHERS:
+            case reportDb.REPORT_TYPE_EVENT:
+            case reportDb.REPORT_TYPE_NEWS:
                 createNewReport(senderID, payload);
-                
-                //TODO: create new record and set type of report based on 'payloadType'
-
                 break;
 
         default:
@@ -598,11 +594,28 @@ var sendLatestPost = async (function(recipientId) {
 });
 
 var createNewReport = async (function (reporterId, payload) {
-    const msg = "Thank you for reporting a case on "+ payload +" Trafficking. " + REPORT_RESPONSE_MESSAGE;
-    sendTextMessage(reporterId, msg);
-    sendTextMessage(reporterId, "To end reporting, type \"END\"");
-    var report = await(reportDb.insertReport(reporterId, payload));
-    userDb.updateUserState(reporterId, report.insertId);
+    switch (payload) {
+        case reportDb.REPORT_TYPE_SEX:
+        case reportDb.REPORT_TYPE_DOMESTIC:
+        case reportDb.REPORT_TYPE_OTHERS:
+            const msg = "Thank you for reporting a case on "+ payload +" Trafficking. " + REPORT_RESPONSE_MESSAGE + "\n\nTo end reporting, type \"END\"";
+            sendTextMessage(reporterId, msg);
+            var report = await(reportDb.insertReport(reporterId, payload));
+            userDb.updateUserState(reporterId, report.insertId);
+            break;
+
+        case reportDb.REPORT_TYPE_EVENT:
+        case reportDb.REPORT_TYPE_NEWS:
+            const msg = "Thanks for contributing. Please provide us your " + payload + " details. \n\nFor ending the submission, type \"END\"";
+            sendTextMessage(reporterId, msg);
+            var report = await(reportDb.insertReport(reporterId, payload));
+            userDb.updateUserState(reporterId, report.insertId);
+            break;
+        
+        default:
+            showMenu(reporterId, "Hmm. I don't get what you mean. Here are the lists I can do.");
+            break;
+    }
 });
 
 var getUserCurrentState = async (function (reporterId) {
@@ -746,7 +759,7 @@ function sendTextMessage(recipientId, messageText) {
 * Send menu for users.
 *
 */
-function showMenu(recipientId) {
+function showMenu(recipientId, title) {
     var title = "What can I do for you?";
     var options = [
         {
