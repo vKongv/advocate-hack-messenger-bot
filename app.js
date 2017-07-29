@@ -510,6 +510,7 @@ function formatReportMessages (messages) {
     messages.forEach(function (message) {
         if (message.type === messageDb.TYPE_IMAGE) {
             images.push(message.text);
+            formattedMessage += '>> [image-' + message.length.toString() + ']\n\n';            
         } else {
             formattedMessage += '>> ' + message.text + '\n\n';
         }
