@@ -544,6 +544,7 @@ function receivedPostback(event) {
 
         case "BROADCAST":
             broadcastToAllUser();
+            sendTextMessage(senderID, "Your post is being broadcasted.");
             break;
 
         case "POST_REPORTS_NEWS_EVENTS":
