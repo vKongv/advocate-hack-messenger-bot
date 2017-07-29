@@ -273,7 +273,7 @@ var receivedMessage = async (function(event) {
             switch(textChecker) {
                 case "end": 
                     userDb.updateUserState(senderID, 0);
-                    sendTextMessage(recipientId, "All information you reported had been noted down.");
+                    sendTextMessage(senderID, "All information you reported had been noted down.");
                     break;
                 default:
                     var msgReplied = [
@@ -287,7 +287,7 @@ var receivedMessage = async (function(event) {
                     var min = Math.ceil(0);
                     var max = Math.floor(msgReplied.length);
                     const msgIndex = Math.floor(Math.random() * (max - min + 1)) + min;
-                    sendTextMessage(recipientId, msgReplied[msgIndex]);
+                    sendTextMessage(senderID, msgReplied[msgIndex]);
                     break;
             };
             
