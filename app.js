@@ -455,7 +455,10 @@ function receivedPostback(event) {
             break;
         case "LATEST_NEWS_EVENT":
             sendLatestPost(senderID);
-        break;
+            break;
+        case "REPORT":
+            show(senderID);
+            break;
         default:
             sendTextMessage(senderID, "Postback called");
             break;
@@ -701,27 +704,33 @@ function showMenu(recipientId) {
                 payload: {
                     template_type: "button",
                     text: "What can I do for you?",
-                    buttons:[{
-                        type: "postback",
-                        title: "Latest News/Events",
-                        payload: "LATEST_NEWS_EVENT",
-                    }, 
-                    {
-                        type: "postback",
-                        title: "Report!",
-                        payload: "REPORT",
-                    }, 
-                    // {
-                        //   type: "phone_number",
-                        //   title: "Call Emergency / NGO",
-                        //   payload: "+60179556908"
-                        // },
+                    buttons:[
                         {
-                            type: "web_url",
-                            url: "https://www.facebook.com/nowhat.hk/videos/256977024819189/?hc_ref=ARRh6DTPy4r1jtB2GSUtXVRR6vKCt-aCvUDzCR40MqdMzXJsJKOWXdqvnOh9u-lx8oY",
-                            title: "View Post"
+                            type: "postback",
+                            title: "Latest News / Events",
+                            payload: "LATEST_NEWS_EVENT",
+                        }, 
+                        {
+                            type: "postback",
+                            title: "Report",
+                            payload: "REPORT",
+                        },
+                        {
+                            type: "postback",
+                            title: "Report",
+                            payload: "REPORT",
+                        },
+                        {
+                            type: "postback",
+                            title: "Report",
+                            payload: "REPORT",
+                        },
+                        {
+                            type: "postback",
+                            title: "Report",
+                            payload: "REPORT",
                         }
-                    ]
+                    ],
                 }
             }
         }
