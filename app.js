@@ -19,9 +19,10 @@ const
     request = require('request'),
     userDb = require('./db/user.js'),
     postDb = require('./db/post.js'),
-    messageDb = require('./db/message.js');
+    messageDb = require('./db/message.js'),
+    reportDb = require('./db/report.js');
 
-const REPORT_RESPONSE_MESSAGE = "\n\nCan you please provide us the following details: \n - Time \n - Date of incident \n - Location \n - Description of event. \n\nAlso, Upload as many pictures as necessary. \nDo provide us your mobile number in case we need to contact you for further details.  \n\n** Disclaimer: \nPlease be assured that the information you provide will not be published publicly but will be handled only by relevant authorities.";
+const REPORT_RESPONSE_MESSAGE = "\n\nCan you please provide us the following details: \n - Time \n - Date of incident \n - Location \n - Description of event. \n\nAlso, Upload as many pictures as necessary. \n\nDo provide us your mobile number in case we need to contact you for further details.  \n\n** Disclaimer: \nPlease be assured that the information you provide will not be published publicly but will be handled only by relevant authorities.";
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
@@ -34,7 +35,6 @@ app.use(express.static('public'));
  * set them using environment variables or modifying the config file in /config.
  *
  */
-var report = require('./db/report');
 var async = require('asyncawait/async');
 var await = require('asyncawait/await');
 
@@ -132,23 +132,6 @@ app.post('/webhook', async (function (req, res) {
  * (sendAccountLinking) is pointed to this URL. 
  * 
  */
-
-app.get('/report', async (function (req, res) {
-  var result  = await(report.getAll());
-  res.status(result.status).json({body: result.body});
-}));
-
-app.get('/:id/report', async (function (req, res) {
-  var result  = await(report.get(req));
-  res.status(result.status).json({body: result.body});
-}));
-
-app.put('/:id/report', async (function (req, res) {
-  var result  = await(report.put(req));
-  res.status(result.status).json({body: result.body});
-}));
-
-
 app.get('/authorize', function(req, res) {
     var accountLinkingToken = req.query.account_linking_token;
     var redirectURI = req.query.redirect_uri;
@@ -467,11 +450,12 @@ function receivedPostback(event) {
             showReportCategory(senderID);
             break;
 
-            case "SEX":
-            case "DOMESTIC":
-            case "OTHERS":
-                const msg = "Thank you for reporting a "+ payload +" Trafficking case. " + REPORT_RESPONSE_MESSAGE;
+            case reportDb.REPORT_TYPE_SEX:
+            case reportDb.REPORT_TYPE_DOMESTIC:
+            case reportDb.REPORT_TYPE_OTHERS:
+                const msg = "Thank you for reporting a case on "+ payload +" Trafficking. " + REPORT_RESPONSE_MESSAGE;
                 sendTextMessage(senderID, msg);
+                reportDb.insertReport(senderID, payload);
                 
                 //TODO: create new record and set type of report based on 'payloadType'
 
@@ -753,17 +737,17 @@ function showReportCategory(recipientId) {
         {
             type: "postback",
             title: "Sex Trafficking",
-            payload: "SEX",
+            payload: reportDb.REPORT_TYPE_SEX,
         },
         {
             type: "postback",
             title: "Domestic Trafficking",
-            payload: "DOMESTIC",
+            payload: reportDb.REPORT_TYPE_DOMESTIC,
         },
         {
             type: "postback",
             title: "Others",
-            payload: "OTHERS",
+            payload: reportDb.REPORT_TYPE_OTHERS,
         },
     ];
 
