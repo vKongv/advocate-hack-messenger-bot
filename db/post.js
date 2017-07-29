@@ -12,7 +12,7 @@ function getLatestPost(limit) {
     if (!limit) {
         limit = 10;
     }
-    return connection.queryAsync('SELECT * FROM report ORDER BY id DESC limit ?', [limit]);
+    return connection.queryAsync('SELECT * FROM post ORDER BY id DESC limit ?', [limit]);
 }
 
 // TODO: update this function to insert a new report
