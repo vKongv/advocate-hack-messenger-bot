@@ -51,6 +51,10 @@ function updateUserState(facebookId, reportId) {
     }
 }
 
+function getModeratorUsers(){
+    return connection.queryAsync('SELECT * FROM user WHERE role = ?', [ROLE_MODERATOR]);
+}
+
 module.exports.ROLE_USER = ROLE_USER;
 module.exports.ROLE_MODERATOR = ROLE_MODERATOR;
 module.exports.ROLE_NGO = ROLE_NGO;

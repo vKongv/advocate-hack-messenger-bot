@@ -341,7 +341,7 @@ function receivedMessage(event) {
                 break;
 
             case 'show report':
-                getLatestReport(senderID);
+                sendLatesReport(senderID);
                 break;
             
             //TODO: isReporting logic (message continuous)
@@ -522,31 +522,33 @@ function formatReportMessages (messages) {
     return {splittedMessages, images};
 }
 
-var getLatestReport = async(function (senderId) {
+var sendLatesReport = async(function (senderId) {
     var messages = await(messageDb.getLatestUserReportMessage(senderId));
-    if (messages.length > 0) {
+    var moderator = await(userDb.getModeratorUsers());
+    if (moderator.length > 0 && messages.length > 0) {
         var newMessages = formatReportMessages(messages);
-        sendTextMessage(senderId, 'Your latest report message:');      
+        var moderatorId = moderator.facebookId;
+        sendTextMessage(moderatorId, "There is a new report coming in...");        
         newMessages.splittedMessages.forEach(function (message) {
-            sendTextMessage(senderId, message);
+            sendTextMessage(moderatorId, message);
         });
         if (newMessages.images.length > 0) {
             var images = newMessages.images;
             for(var i  = 0; i < newMessages.images.length; i++) {
                 images[i] = mapReportImageToGenericTemplate(images[i]);
             }
-            sendGenericMessage(senderId, images);  
+            sendGenericMessage(moderatorId, images);  
         }
-        return ;
     } else {
-        return sendTextMessage(senderId, 'No report found for your account');
+        console.warn('No moderator found or report is empty');
     }
+    
 });
 
 function mapReportImageToGenericTemplate(image) {
     var template = {
         title: 'Report Image',
-        item_url: image,               
+        item_url: image,              
         image_url: image,
     };
     return template;
