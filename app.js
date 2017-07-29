@@ -243,7 +243,9 @@ function receivedMessage(event) {
     var messageText = message.text;
     var messageAttachments = message.attachments;
     var quickReply = message.quick_reply;
-    
+
+    //get user current status
+    var userStatus = getUserCurrentState(senderID);
     
     if (isEcho) {
         // Just logging message echoes to console
@@ -263,8 +265,18 @@ function receivedMessage(event) {
         // If we receive a text message, check to see if it matches any special
         // keywords and send back the corresponding example. Otherwise, just echo
         // the text we received.
-
         var textChecker = messageText.toLowerCase();
+
+        if (userStatus > 0) {
+            switch(textChecker) {
+                case "end": 
+                    userDb.updateUserState(senderID, 0);
+                    break;
+                default:
+                    messageDb.insertMessage(userStatus, text, messageDb.TYPE_TEXT);
+                    break;
+            };
+        }
 
         switch (textChecker) {
             case 'list':
@@ -344,11 +356,13 @@ function receivedMessage(event) {
                 sendLatesReport(senderID);
                 break;
             
-            //TODO: isReporting logic (message continuous)
-            // case isReportActivated:
-            //     console.log(event.message);
-            //     forwardMessage(senderID, event.message);
-            //     break;
+            case 'hey':
+                getUserInfo(senderID).then(
+                    function (response) {
+                        sendTextMessage(senderID, "hey " + response["first_name"]);
+                    }
+                );
+                break;
             
             default:
                 const numberOfMeow = Math.floor(2 * Math.random()) + 1;
@@ -356,38 +370,30 @@ function receivedMessage(event) {
                 for (let i = 0; i < numberOfMeow; i++) {
                     message += 'Meow' + ' ';
                 }
-                
-                if (messageText == "hey") {
-                    message = "hey "+ getUserInfo(senderID, "first_name");
-                }
-                
                 sendTextMessage(senderID, message);
                 break;
         }
         
     } else if (messageAttachments) {
-        // switch(true) {
-        //     case isReportActivated:
-        //         console.log(event.message);
-        //         forwardMessage(senderID, event.message);
-        //         break;
-        //     default:
-
-        //"Message with attachment received"
-                sendTextMessage(senderID, messageAttachments);
-                // break;
-        // }
+        switch (messageAttachments.type) {
+            case "image":
+                if (userStatus > 0) {
+                    messageDb.insertMessage(userStatus, messageAttachments, messageDb.TYPE_IMAGE);
+                }
+                break;
+            default:
+                const msg = "Message with attachment received."
+                sendTextMessage(senderID, msg);
+        }
     }
 }
 
 function getUserInfo(userId, field) {
-    var userInfo = callUserProfileAPI(userId).then(
+    return callUserProfileAPI(userId).then(
         function(userProfile){
             console.log(userProfile);
             return userProfile;
         });
-    console.log(userInfo);
-    return userInfo[field];
 }
     
     
@@ -577,11 +583,16 @@ var sendLatestPost = async (function(recipientId) {
     }
 });
 
-var createNewReport = async(function (reporterId, payload) {
+var createNewReport = async (function (reporterId, payload) {
     const msg = "Thank you for reporting a case on "+ payload +" Trafficking. " + REPORT_RESPONSE_MESSAGE;
     sendTextMessage(reporterId, msg);
     var report = await(reportDb.insertReport(reporterId, payload));
-    console.log(report);
+    userDb.updateUserState(reporterId, report.insertId);
+});
+
+var getUserCurrentState = async (function (reporterId) {
+    var user = await(userDb.getUser(reporterId));
+    return user[0].isReporting;
 });
 
 /*
