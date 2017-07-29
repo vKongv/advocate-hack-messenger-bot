@@ -321,12 +321,13 @@ var receivedMessage = async (function(event) {
                         } else {
                             postDb.updatePostImage(post.id, messageText);                       
                         }
-                        sendTextMessage(senderID, "Thank you. Your post is being recorded and broadcasted. Do you want to broadcast it now? (YES or LATER)");
+                        sendTextMessage(senderID, "Thank you. Your post is being recorded. Do you want to broadcast it now? (YES or LATER)");
                     } else {
                         if (textChecker === 'yes') {
                             broadcastToAllUser();
                         }
-                        userDb.updateUserIsPosting(senderID, 0); // reset isPosting state                        
+                        userDb.updateUserIsPosting(senderID, 0); // reset isPosting state  
+                        sendTextMessage(senderID, "Your post is being broadcasted.");
                     }
                 } else {
                     userDb.updateUserIsPosting(senderID, 0); // reset isPosting state
@@ -532,14 +533,23 @@ function receivedPostback(event) {
             showPostNewsEventCategory(senderID);
             break;
 
-            case reportDb.REPORT_TYPE_SEX:
-            case reportDb.REPORT_TYPE_DOMESTIC:
-            case reportDb.REPORT_TYPE_OTHERS:
+        case reportDb.REPORT_TYPE_SEX:
+        case reportDb.REPORT_TYPE_DOMESTIC:
+        case reportDb.REPORT_TYPE_OTHERS:
 
-            case reportDb.REPORT_TYPE_EVENT:
-            case reportDb.REPORT_TYPE_NEWS:
-                createNewReport(senderID, payload);
-                break;
+        case reportDb.REPORT_TYPE_EVENT:
+        case reportDb.REPORT_TYPE_NEWS:
+            createNewReport(senderID, payload);
+            break;
+
+        case "BROADCAST":
+            broadcastToAllUser();
+            break;
+
+        case "POST_REPORTS_NEWS_EVENTS":
+            postDb.insertPost(senderID);
+            sendTextMessage(senderID, "OK. You will need to first provide the title of the post.");
+            break;
 
         default:
             sendTextMessage(senderID, "Postback called");
@@ -825,7 +835,7 @@ function sendTextMessage(recipientId, messageText) {
 *
 */
 function showMenu(recipientId, title) {
-    var dbUsers = await(userDb.getUser(senderID));
+    var dbUsers = await(userDb.getUser(recipientId));
     var dbUser = dbUsers[0];
     var options = [];
     if ( dbUser.role === userDb.ROLE_NGO ) {
@@ -842,23 +852,43 @@ function showMenu(recipientId, title) {
             },
             {
                 type: "postback",
-                title: "Post News / Events",
+                title: "Add News / Events",
                 payload: "POST_NEWS_EVENT",
             },
         ];
+    } else if ( dbUser.role === userDb.ROLE_MODERATOR ) {
+        options = [
+            {
+                type: "postback",
+                title: "Latest News / Events",
+                payload: "LATEST_NEWS_EVENT",
+            }, 
+            {
+                type: "postback",
+                title: "Post Reports / News / Events",
+                payload: "POST_REPORTS_NEWS_EVENTS",
+            },
+            {
+                type: "postback",
+                title: "Broadcast",
+                payload: "BROADCAST",
+            },
+        ];
+    } else {
+        options = [
+            {
+                type: "postback",
+                title: "Latest News / Events",
+                payload: "LATEST_NEWS_EVENT",
+            }, 
+            {
+                type: "postback",
+                title: "Report",
+                payload: "REPORT",
+            },
+        ];
+
     }
-    var options = [
-        {
-            type: "postback",
-            title: "Latest News / Events",
-            payload: "LATEST_NEWS_EVENT",
-        }, 
-        {
-            type: "postback",
-            title: "Report",
-            payload: "REPORT",
-        },
-    ];
     sendButtonMessage(recipientId, options, title);
 }
 
