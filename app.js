@@ -24,7 +24,7 @@ const
 
 const REPORT_RESPONSE_MESSAGE = "\n\nCan you please provide us the following details: \n - Time \n - Date of incident \n - Location \n - Description of event. \n\nAlso, Upload as many pictures as necessary. \n\nDo provide us your mobile number in case we need to contact you for further details.  \n\n** Disclaimer: \nPlease be assured that the information you provide will not be published publicly but will be handled only by relevant authorities.";
 const DEFAULT_POST_IMAGE = "http://copyrightuser.org/wp-content/uploads/2013/04/newsreporting.jpg";
-const MESSAGE_GUIDE_MENU = "I can do 2 things at this point: \n\n1. Keep you updated on the latest news and events on human trafficking.\n2.Forward your reports of any human trafficking event to the right authorities.\n";
+const MESSAGE_GUIDE_MENU = "I can do 2 things at this point: \n\n1. Keep you updated on the latest news and events on human trafficking.\n2. Forward your reports of any human trafficking event to the right authorities.\n";
 
 var app = express();
 app.set('port', process.env.PORT || 5000);
