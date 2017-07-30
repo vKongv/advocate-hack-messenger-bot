@@ -325,9 +325,11 @@ var receivedMessage = async (function(event) {
                     } else {
                         if (textChecker === 'yes') {
                             broadcastToAllUser();
-                        }
-                        userDb.updateUserIsPosting(senderID, 0); // reset isPosting state  
-                        sendTextMessage(senderID, "Your post is being broadcasted.");
+                            showMenu(senderID, "Your post is being broadcasted.");                            
+                        } else {
+                            showMenu(senderID, "Sure. You can always broadcast from this menu");                            
+                        }                   
+                        userDb.updateUserIsPosting(senderID, 0); // reset isPosting state
                     }
                 } else {
                     userDb.updateUserIsPosting(senderID, 0); // reset isPosting state
@@ -544,7 +546,7 @@ function receivedPostback(event) {
 
         case "BROADCAST":
             broadcastToAllUser();
-            sendTextMessage(senderID, "Your post is being broadcasted.");
+            showMenu(senderID, "Your post is being broadcasted.");
             break;
 
         case "POST_REPORTS_NEWS_EVENTS":
@@ -650,7 +652,7 @@ function mapPostToGenericTemplate(post) {
         title: post.title,
         item_url: post.link,               
         image_url: post.imageUrl ? post.imageUrl : '',
-        subtitle: !post.imageUrl ? post.title : '',
+        subtitle: post.description,
         buttons: [{
             type: "element_share"
         }],
