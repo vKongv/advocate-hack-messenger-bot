@@ -21,7 +21,7 @@ function getUser(id) {
 }
 
 function getAllNormalUser() {
-    return connection.queryAsync('SELECT * FROM user WHERE role = ?', [ROLE_USER]);    
+    return connection.queryAsync('SELECT * FROM user WHERE role IN (?,?)', [ROLE_USER, ROLE_NGO]);
 }
 
 function insertUser(facebookId, role) {
